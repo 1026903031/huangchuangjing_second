@@ -207,7 +207,47 @@ window.onload = function () {
         }, 30)
     }
 
-    
+    /*评论框框的显示*/
+    var comment_show = document.getElementById("comment_show");
+    var comment = document.getElementById("comment");
 
+    comment_show.onclick = function() {
+        if (comment.style.display == "none") {
+            comment.style.display = "block";
+            console.log(123);
+            
+        } else {
+            comment.style.display = "none";
+        }
+            
+    }
+    /*简易的评论功能          ---   还未完善！！！！！*/
+    /*var goComment = this.document.getElementById("goComment");
+    var text = this.document.querySelector('textarea');
+    var input_text = this.document.querySelector('.comment_item');
+
+    goComment.onclick = function() {
+        if (text.value == '') {
+            alert('宁没有输入内容');
+            return false;
+        } else {
+            var li = document.createElement('li');
+            li.innerHTML = text.value + '<a href ="javascript:;" id="delete" >删除</a>';
+            
+            input_text.appendChild(li);
+
+            /*input_text.insertBefore(li,input_text.children[0]);
+
+            var conmmentDelete = document.getElementById('delete');
+            
+            for(var i = 0 ;i < conmmentDelete.length; i++) {
+                conmmentDelete[i].onclick = function () {
+                    input_text.removeChild(this.parentNode);
+                }
+            }
+        
+        }
+        
+    }*/
 
 }

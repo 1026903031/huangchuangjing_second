@@ -44,7 +44,7 @@ ul {
 
 /*整体*/
 .land {
-    display: none;
+    /*display: none;*/
     /*设置背景图片与颜色*/
     background-image: url(land/background.png);
     width: 100%;
@@ -574,7 +574,7 @@ ul {
     animation-iteration-count: 1; 
     animation-delay: 0s;
 
-    /*display: none;*/
+    display: none;
 
 }
 
@@ -1098,6 +1098,89 @@ ul {
     color: #999;
 }
 
+/*评论区域*/
+.comment {
+    height: 100%;
+    display: none;
+
+}
+
+.comment_box {
+    border: 1px solid #ebebeb;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+    margin-top: 12px;
+    background-color: #fff;
+    overflow: visible;
+    border-radius:4px ;
+}
+
+.comment_text {
+    border-radius: 2px;
+    border-bottom: 1px solid #f6f6f6;
+    height: 50px;
+    padding: 0 20px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.comment_input_box {
+    display: flex;
+    padding: 12px 20px;
+    background-color: #fff;
+    border-top: 1px solid #ebebeb;
+    position: relative;
+    padding-right: 94px;
+}
+
+.input_box  {
+    position: relative;
+    display: flex;
+    align-items:flex-end;
+    border-radius: 3px;
+}
+
+.input_box textarea {
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 6px 12px;
+    line-height: 1.6;
+    word-break: break-word;
+    font-size: 15px;
+    height: 24px;
+    width: 520px;
+
+    outline: none;
+    outline: 0;
+    overflow:auto;
+
+    resize:none  /*去右下角*/
+}
+
+.input_box textarea::-webkit-scrollbar {
+    display: none; /*去滚动条*/
+}
+.input_box .idco {
+    height: 36px;
+    width: 36px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.comment_input_box button {
+    padding: 0 12px;
+    color: #fff;
+    background-color: #0084ff;
+    position:absolute;
+    right: 16px;
+    bottom: 13px;
+    line-height: 36px;
+    font-size: 14px;
+
+    border: none;
+    border-radius: 4px;
+
+}
 
 /*右侧功能栏-----------*/
 .sideBar {
