@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <title> 知乎一下你就知道 </title>
+      <link rel="stylesheet" href="land.css" />
+    </head>
+
+    <body>
+        <!--登陆界面-->
+        <div class="land">
+
+            
+            <!--内容-->
+            <div class="content">
+
+                <div class="content_box">
+                    <!--图标-->
+                    <div class="logo">
+                      <img src="land/logo.png">
+                    </div>
+            
+                    <!--登录框-->
+                    <div class="login">
+                        <!--上面-->
+                        <div class="login_contentOutside">
+                            <!--主要内容-->
+                            <form class="login_content">
+
+                                <!--顶部-->
+                                <div class="content_top">
+                                    <div class="left" id="left">
+                                        免密码登录
+                                        <div class="leftOpen" id="leftOpen"></div>
+                                    </div>
+                                    <div class="right" id="right">
+                                        密码登录
+                                        <div class="rightOpen" id="rightOpen"></div>
+                                    </div>
+                                </div>
+
+                                <div class="content_qrodeTab" id="qrode">
+                                    <img src="land/download.png" id="qrodeImg">
+                                    <div class="angle"></div>
+                                </div>
+
+                                <!--密码登录的内容-->
+                                <div class="rightOpen" id="right_Open">
+                                    <!--框框-->
+                                    <div class="content_account">
+                                        <input name="username" type="text" placeholder="手机号或者邮箱" >
+                                    </div>
+
+                                    <div class="content_password">
+                                        <input name="password" type="password" placeholder="密码" >
+                                        <button type="button" class="show">
+                                            <span class="idco">&#xe745</span>
+                                        </button>
+                                    </div>
+                                
+                                    <!--提醒按钮-->
+                                    <div class="content_remind">
+                                        <button type="button" class="phonePass">海外手机号登录</button>
+                                        <button type="button" class="forget">忘记密码？</button>
+                                    </div>
+
+                                    <!--登录按钮-->
+                                    <button type="button" class="goto">登录</button>
+
+                                    <div class="content_sign">
+                                        <div>
+                                            未注册手机验证后自动登录，注册即代表同意
+                                            <a href="javascript:;">《知乎协议》</a>
+                                            <a href="javascript:;">《隐私保护指引》</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--免密码登录的内容-->
+                                <div class="leftOpen" id="left_Open">
+                                    <!--框框-->
+                                    <div class="signFlow_account">
+                                        <select class="country">
+                                            <option value=" 中国 +86 " selected="" > 中国 +86 </option>
+                                            <option value="">美国 +1</option>
+                                            <option value="">日本 +81</option>
+                                            <option value="">加拿大 +1</option>
+                                        </select>
+
+                                        <div class="division"></div>
+
+                                        <input class="phoneNumber" name="username" type="tel" placeholder="手机号" >
+                                    </div>
+
+                                    <div class="signFlow_password">
+                                        <input name="password" type="text" placeholder="输入6位短信验证码" >
+                                        <button type="button" class="show">
+                                            获取短信验证码
+                                        </button>
+                                    </div>
+                        
+                                    <!--提醒按钮-->
+                                    <div class="signFlow_remind">
+                                        <button type="button" >接受语音验证码</button>
+                                    </div>
+
+                                    <!--登录按钮-->
+                                    <button type="button" class="goto">注册/登录</button>
+
+                                    <div class="content_sign">
+                                        <div>
+                                            未注册手机验证后自动登录，注册即代表同意
+                                            <a href="javascript:;">《知乎协议》</a>
+                                            <a href="javascript:;">《隐私保护指引》</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--二维码登录-->
+                                <div class="qrode" id="qrodeOpen">
+                                    <div class="qrode_top">
+                                        <h2>扫码登录</h2>
+                                    </div>
+
+                                    <img src="land/qrode.png">
+
+                                    <div class="qrode_down">
+                                        <p>打开 <a href="javascript:;">知乎 App</a></p>
+                                        <p>在[我的]页面右上角打开扫一扫</p>
+                                    </div>
+
+                                </div>
+                            
+                            </form>
+                        </div>
+                    
+                        <div class="login_app">
+                            <span>社会账号登录</span>
+                            <span class="appPart">
+                                <a href="javascript:;"><span class="idco" id="green">&#xe66a </span>微信</a>
+                                <a href="javascript:;"><span class="idco" id="bule">&#xe62d </span>QQ</a>
+                                <a href="javascript:;"><span class="idco" id="red">&#xe61b </span>微博</a>
+                            </span>
+                        </div>
+
+                        <div class="login_floor">
+                            <div class="leftLower">
+                                <a href="javascript:;"><span class="idco">&#xe602 </span>开通机构号</a>
+                            </div>
+
+                            <div class="division"></div>
+
+                            <div class="rightLower">
+                                <a href="javascript:;"><span class="idco">&#xe61c </span>下载知乎App</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+            <!--底部文字-->
+            <div class="floor">
+                <div class="zhihuLinks">
+                    <a href="javascript:;">知乎专栏 ·</a>
+                    <a href="javascript:;">圆桌 · </a>
+                    <a href="javascript:;">发现 · </a>
+                    <a href="javascript:;">移动应用 · </a>
+                    <a href="javascript:;">联系我们 · </a>
+                    <a href="javascript:;">来知乎工作 · </a>
+                    <a href="javascript:;">注册机构号 · </a>
+                </div>
+
+                <div class="zhihuRights">
+                    <span>© 2020 知乎 · </span>
+                    <a href="javascript:;">京 ICP 证 110745 号 · </a>
+                    <a href="javascript:;">京 ICP 备 13052560 号 - 1 · </a>
+                    <a href="javascript:;">
+                        <img src="land/public.png">
+                        京公网安备 11010802010035 号 · 
+                    </a>
+                    <a href="javascript:;">出版物经营许可证</a>
+                </div>
+
+                <div class="zhihuReports">
+                    <a href="javascript:;">侵权举报 · </a>
+                    <a href="javascript:;">网上有害信息举报专区 · </a>
+                    <a href="javascript:;">儿童色情信息举报专区 · </a>
+                    <span>违法和不良信息举报：010-82716601</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--主页-->
+        <div class="homepage">
+            <!--顶上导航条-->
+            <header role="banner" class="header">
+                <div class="head">
+                    <div id="header_roll">
+                        <!--顶上导航条1-->
+                        <div class="header_inner">
+                            <a href="javascript:;" ><img src="homepage/logo.png" alt=""></a>
+                            <ul>
+                                <li class="header_first">
+                                    <a href="javascript:;" ><strong>首页</strong></a>
+                                    <div class="showblue"></div>
+                                </li>
+    
+                                <li>
+                                    <a href="javascript:;" >发现</a>
+                                </li>
+    
+                                <li>
+                                    <a href="javascript:;" >等你来答</a>
+                                </li>
+                            </ul>
+    
+                            <div class="search">
+                                <div class="search_box">
+                                    <form>
+                                        <label>
+                                            <input type="text" placeholder="有问题上知乎">
+                                            <button type="button"  class="idco">&#xe63c</button>
+                                        </label>
+                                    </form>
+                                </div>
+                        
+                                <button  class="question" type="button" >提问</button>
+                            </div>
+    
+                            <div class="hearder_user">
+                                <div class="bell">
+                                    <button type="button" class="idco">&#xe734</button>
+                                </div>
+    
+                                <div class="information">
+                                    <button type="button" class="idco">&#xe608</button>
+                                </div>
+    
+                                <div class="people">
+                                    <button type="button" class="idco">&#xe600</button>
+                                </div>
+    
+                            </div>
+    
+                        </div>
+                            
+                        <!--顶上导航条2-->
+                        <div class="header_innershow">
+                            <div class="innershow_left">
+                                <a href="javascript:;" ><img src="homepage/logo.png" alt=""></a>
+                                <ul>
+                                    <li class="header_first">
+                                        <a href="javascript:;" >推荐</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="javascript:;" >关注</a>
+                                    </li>
+                                    
+                                    <li>    
+                                        <a href="javascript:;" >热榜</a>
+                                    </li>
+                                </ul>
+    
+                            </div>
+                            
+                            <div class="innershow_right">
+                                <div class="search">
+                                    <div class="search_box">
+                                        <form>
+                                            <label>
+                                                <input  type="text" placeholder="有问题上知乎">
+                                                <button type="button"  class="idco">&#xe63c</button>
+                                            </label>
+                                        </form>
+                                    </div>
+                                    
+                                    <button  class="question" type="button" >提问</button>
+                                </div>
+    
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                
+            </header>
+
+            <!--内容-->
+            <div class="homepage_main">
+                <!--主要内容（右侧）-->
+                <div class="content">
+                    <a class="banner" href="javascript:;">
+                        <img src="homepage/banner.jpg">
+                    </a>
+
+                    <div class="primaryCoverage">
+                        <div class="nav">
+                            <a href="javascript:;">推荐</a>
+                            <a href="javascript:;">关注</a>
+                            <a href="javascript:;">热榜</a>
+                        </div>
+
+                        <div class="article">
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam quas ipsum...</span>
+                                        <button type="button">阅读全文<span >▼ </span></button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">赞同</button>
+                                        <button type="button">👎</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--侧边内容-->
+                <div class="sideBar">
+                    <!--上边-->
+                    <div class="newWrite">
+                        <div class="newWrite_top">
+                            <div class="newWrite_topItem">
+                                <div class="item_box"  style="background-color:rgb(225,241,255);">
+                                    <a href="javascript:;"  style="color: rgb(0,132,255);" class="idco" >&#xe636</a>
+                                </div>
+
+                                <a href="javascript:;">回答问题</a>
+                            </div>
+
+                            <div class="newWrite_topItem">
+                                <div class="item_box" style="background-color:rgb(255,243,226);" >
+                                    <a href="javascript:;" style="color: rgb(255,150,7); " class="idco" >&#xe65e</a>
+                                </div>
+
+                                <a href="javascript:;">发视频</a>
+                            </div>
+
+                            <div class="newWrite_topItem">
+                                <div class="item_box" style="background-color:rgb(254,249,226);" >
+                                    <a href="javascript:;" style="color: rgb(244,200,7);" class="idco" >&#xe63f</a>
+                                </div>
+
+                                <a href="javascript:;">写文章</a>
+                            </div>
+
+                            <div class="newWrite_topItem">
+                                <div class="item_box" style="background-color:rgb(229,247,247);" >
+                                    <a href="javascript:;" style="color: rgb(38,191,191);" class="idco" >&#xe638</a>
+                                </div>
+
+                                <a href="javascript:;">写想法</a>
+                            </div>
+                        </div>
+
+                        <div class="newWrite_bottom">
+                            <div class="item_box">
+                                <a href="javascript:;">稍后答</a>
+                            </div>
+
+                            <div class="item_box">
+                                <a href="javascript:;">草稿箱</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--创作者中心-->
+                    <div class="creatorCenter">
+                        <a href="javascript:;">
+                            <div class="idco">&#xe605</div>
+
+                            <div class="creatorCenter_word">
+                                创作者中心
+                                <span>去开通</span>
+                            </div>
+
+                            <div class="idco">&#xe6e8</div>
+                        </a>
+                    </div>
+
+                    <!--分类专栏-->
+                    <div class="categoryList">
+
+                        <a href="javascript:;">
+                            <img src="homepage/bannertwo.png">
+                        </a>
+
+                        <ul class="categoryList_down">
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(255,207,0); " >&#xe62e</span>
+                                    <span >Live</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(67,212,128); " >&#xe603</span>
+                                    <span>书店</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(0,132,255); " >&#xe67a</span>
+                                    <span>圆桌</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(15,136,235); " >&#xe6ab</span>
+                                    <span>专栏</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(84,120,240); " >&#xe7a8</span>
+                                    <span>付费咨询</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="color: rgb(88,104,209); " >&#xe874</span>
+                                    <span>百科</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--条条栏-->
+                    <div class="card">
+                        <ul>
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe612</span>
+                                    <span class="cardList" >我的收藏</span>
+                                    <span>0</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe7a9</span>
+                                    <span class="cardList" >我关注的问题</span>
+                                    <span>0</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe776</span>
+                                    <span class="cardList" >我的邀请</span>
+                                    <span>0</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe79f</span>
+                                    <span class="cardList" >我的余额</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe613</span>
+                                    <span class="cardList" >站务中心</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco">&#xe78c</span>
+                                    <span class="cardList" >帮助中心</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="idco" style="font-size: 15px;">&#xe601</span>
+                                    <span class="cardList"  >版权服务中心</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <!--底部文字-->
+                    <footer >
+                        <a href="javascript:;">刘看山</a>
+                        <span>·</span>
+                        <a href="javascript:;">知乎平台</a>
+                        <span>·</span>
+                        <a href="javascript:;">知乎协议</a>
+                        <span>·</span>
+                        <a href="javascript:;">知乎隐私保护指引</a>
+                        <br>
+                        <a href="javascript:;">应用</a>
+                        <span>·</span>
+                        <a href="javascript:;">工作</a>
+                        <span>·</span>
+                        <a href="javascript:;">申请开通知乎机构号</a>
+                        
+                        <br>
+                        <a href="javascript:;">侵权举报</a>
+                        <span>·</span>
+                        <a href="javascript:;">网上有害信息举报专区</a>
+                        <br>
+                        <a href="javascript:;">京 ICP 证 110745 号  </a>
+                        
+                        <br>
+                        <a href="javascript:;">京 ICP 备 13052560 号 - 1  </a>
+                        
+                        <br>
+                        <a href="javascript:;">
+                            <img src="land/public.png">
+                            京公网安备 11010802010035 号
+                        </a>
+                        
+                        <br>
+                        <span>互联网药品信息服务资格证书</span>
+                        <br>
+                        <span>（京）- 非经营性 - 2017 - 0067</span>
+                        <br>
+                        <span>违法和不良信息举报：010-82716601</span>
+                        <br>
+                        <a href="javascript:;">儿童色情信息举报专区</a>
+                        <br>
+                        <a href="javascript:;">证照中心</a>
+                        <br>
+                        <a href="javascript:;">联系我们 © 2020 知乎</a>
+                        
+                    </footer>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--右下角意见反馈-->
+        <div class="feedback">
+            <div id="goTop">
+                <button type="button" class="idco">&#xe604</button>
+                <div class="pop popone">
+                    <div class="angle"></div>
+                    <span>返回顶部</span>
+                </div>
+            </div>
+
+            <div class="feedback_box">
+                <button type="button" class="idco">&#xe788</button>
+                <div class="pop poptwo">
+                    <div class="angle"></div>
+                    <span>意见反馈</span>
+                </div>
+
+            </div>
+            
+        </div>
+
+    </body>
+    <script src="land.js"></script>
+</html>
