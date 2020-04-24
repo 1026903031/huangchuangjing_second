@@ -10,7 +10,6 @@
         <!--登陆界面-->
         <div class="land">
 
-            
             <!--内容-->
             <div class="content">
 
@@ -65,7 +64,7 @@
                                     </div>
 
                                     <!--登录按钮-->
-                                    <button type="button" class="goto">登录</button>
+                                    <button type="button" class="goto" id="goto_homepage">登录</button>
 
                                     <div class="content_sign">
                                         <div>
@@ -74,6 +73,7 @@
                                             <a href="javascript:;">《隐私保护指引》</a>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <!--免密码登录的内容-->
@@ -231,15 +231,95 @@
     
                             <div class="hearder_user">
                                 <div class="bell">
-                                    <button type="button" class="idco">&#xe734</button>
+                                    <button type="button" class="idco" id="bell" >&#xe734</button>
+
+                                    <div class="user_show bell_show">
+                                        <div class="angle"></div>
+                                        <div class="user_content">
+                                            <div class="user_top">
+
+                                                <button type="button" class="idco" >&#xe64f</button>
+
+                                                <div class="division"></div>
+
+                                                <button type="button" class="idco" >&#xe78d</button>
+
+                                                <div class="division"></div>
+
+                                                <button type="button" class="idco" >&#xe721</button>
+
+                                            </div>
+
+                                            <div class="friends_content">
+                                                <div class="friends_box">
+                                                    <div class="idco">&#xe734</div>
+                                                    <div class="friends_text">还没有消息</div>
+                                                </div>
+
+                                            </div>
+                                            
+
+                                            <div class="user_footer">
+                                                <a href="javascript:;"><span class="idco">&#xe632 </span>设置</a>
+                                                <a href="javascript:;">查看全部通知</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
     
                                 <div class="information">
-                                    <button type="button" class="idco">&#xe608</button>
+                                    <button type="button" class="idco" id="information" >&#xe608</button>
+
+                                    <div class="user_show information_show">
+                                        <div class="angle"></div>
+                                        <div class="user_content">
+                                            <div class="user_top">
+
+                                                <button type="button" >我的私信</button>
+
+                                            </div>
+
+                                            <div class="friends_content">
+                                                <div class="friends_box">
+                                                    <div class="idco">&#xe734</div>
+                                                    <div class="friends_text">还没有新信息</div>
+                                                </div>
+
+                                            </div>
+                                            
+
+                                            <div class="user_footer">
+                                                <a href="javascript:;"><span class="idco">&#xe6ab </span>写新私信</a>
+                                                <a href="javascript:;">查看全部私信</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
                                 </div>
+
     
                                 <div class="people">
-                                    <button type="button" class="idco">&#xe600</button>
+                                    <button type="button" class="idco" id="people">&#xe600</button>
+
+                                    <div class="people_content">
+                                        <div class="angle"></div>
+                                        <div class="people_box">
+                                            <div>
+                                                <a href="javascript:;"><span class="idco">&#xe600 </span>我的主页</a>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:;"><span class="idco">&#xe632 </span>设置</a>
+                                            </div>
+
+                                            <div>
+                                                <a href="javascript:;"><span class="idco">&#xe768 </span>退出</a>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
                                 </div>
     
                             </div>
@@ -311,15 +391,399 @@
 
                                 <div class="rich_Content">
                                     <div class="rich_inner">
-                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam quas ipsum...</span>
-                                        <button type="button">阅读全文<span >▼ </span></button>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
                                     </div>
                                 </div>
                                 
                                 <div class="content_actions">
                                     <span class="actions_first">
-                                        <button type="button">赞同</button>
-                                        <button type="button">👎</button>
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
+                                    </span>
+                                    
+                                    <div class="actions_two">
+                                        <button type="button">
+                                            <span class="idco">&#xe613</span>
+                                            XX条评论
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe6e8</span>
+                                            分享
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe612</span>
+                                            收藏
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe657</span>
+                                            喜欢
+                                        </button>
+    
+                                        <button type="button">
+                                            <span class="idco">&#xe651</span>
+                                        </button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="article_item">
+                                <a href="javascript:;">
+                                    <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                </a>
+
+                                <div class="rich_Content">
+                                    <div class="rich_inner">
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit quia placeat nostrum aliquam q...</span>
+                                        <button type="button">阅读全文▼ </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content_actions">
+                                    <span class="actions_first">
+                                        <button type="button">▲ 赞同 XX</button>
+                                        <button type="button">▼</button>
                                     </span>
                                     
                                     <div class="actions_two">
@@ -472,7 +936,7 @@
                     </div>
 
                     <!--条条栏-->
-                    <div class="card">
+                    <div class="card " id="tofixedone">
                         <ul>
                             <li>
                                 <a href="javascript:;">
@@ -530,7 +994,7 @@
                     </div>
 
                     <!--底部文字-->
-                    <footer >
+                    <footer id="tofixedtwo">
                         <a href="javascript:;">刘看山</a>
                         <span>·</span>
                         <a href="javascript:;">知乎平台</a>

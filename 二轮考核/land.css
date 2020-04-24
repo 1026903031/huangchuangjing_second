@@ -568,6 +568,14 @@ ul {
 .homepage {
     background-color:rgb(246,246,246);
 
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+
+    /*display: none;*/
+
 }
 
 /*顶上导航条*/
@@ -749,6 +757,149 @@ ul {
     font-size: 20px;
 }
 
+/*铃铛隐藏内容*/
+.user_show .angle {
+    position: absolute;
+    top: -20px;
+    left: 170px;
+
+    border:  10px transparent solid;
+    border-bottom-color: #fff;
+    width: 0;
+    height: 0;
+}
+
+.user_show {
+    position: fixed;
+    background-color: #fff;
+    border:1px solid #ebebeb;
+    border-radius: 4px;
+    box-shadow: 0 5px 20px rgba(26, 26, 26, 0.1);
+    z-index: 100;
+    width: 360px;
+    margin-top: 16px;
+    margin-left: -170px;
+    height: 440px;
+
+    display: none;
+
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+
+}
+
+.user_top {
+    display: flex;
+    border-bottom: 1px solid #ebebeb;
+    align-items: center;
+}
+
+.user_top button {
+    position: relative;
+    flex: 11;
+    height: 48px;
+}
+
+.user_top .idco {
+    font-size: 25px;
+}
+.user_top button:first-child {
+    color:#0084ff;
+}
+
+.friends_content {
+    height: 350px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.friends_box {
+    color: rgb(133,144,166);
+    text-align: center;   
+}
+
+.friends_box .idco {
+    width: 150px;
+    height: 120px;
+    font-size: 100px;
+}
+
+.user_footer {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 16px;
+    line-height: 40px;
+    background-color: #fff;
+    border-top: 1px solid #ebebeb;
+    color: #646464;
+}
+
+
+.user_footer a:hover {
+    color: #175199;
+}
+
+.information .user_top button {
+    font-size: 14px;
+    color:#646464;
+}
+
+/*我的主页导航栏*/
+.people_content {
+    display: none;
+
+    margin-top: 16px;
+    position: fixed;
+    background-color: #fff;
+    box-shadow: 0 5px 20px rgba(26, 26, 26, 0.1);
+    z-index: 100;
+    border-radius: 4px;
+    padding: 6px 0;
+
+    width: 120px;
+    height: 120px;
+
+    margin-left: -50px;
+
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.people_content a {
+    padding: 0 20px ;
+    width: 100%;
+    text-align: left;
+    line-height: 40px;
+    font-size: 12px;
+    color: #646464;
+
+}
+
+.people_box div:hover {
+    background-color: #ebebeb;
+}
+
+.people_content .angle {
+    position: absolute;
+    top: -20px;
+    left: 50px;
+
+    border:  10px transparent solid;
+    border-bottom-color: #fff;
+    width: 0;
+    height: 0;
+}
+
+/*顶部导航栏2*/
 .header_innershow {
     
     position: relative;
@@ -868,10 +1019,14 @@ ul {
 }
 
 .rich_inner {
-    max-height: 100px;
+    max-height: 85px;
     margin-top: 9px;
     margin-bottom: -4px;
     overflow: hidden;
+}
+.rich_inner span {
+    text-overflow: ellipsis;
+    
 }
 
 .rich_inner span:hover{
@@ -887,6 +1042,9 @@ ul {
     font-size: 14px;
 }
 
+.rich_inner button:hover {
+    color: #8590a6;
+}
 .content_actions {
     display: flex;
     align-items: center;
@@ -907,6 +1065,10 @@ ul {
     flex-shrink: 0;
 }
 
+.content_actions .actions_first:hover {
+    background-color: rgb(217,237,255);
+}
+
 .actions_first button {
     line-height: 30px;
     padding: 0 12px;
@@ -918,10 +1080,14 @@ ul {
     margin-left: 4px;
 }
 
-.actions_two  button{
+.actions_two  button {
     margin-left: 24px;
     flex-shrink: 0;
     color: #8590a6;
+}
+
+.actions_two  button:hover {
+    color: #999;
 }
 
 
@@ -1136,8 +1302,6 @@ ul {
 .homepage_main footer a:hover {
     color: rgb(23,81,153);
 }
-
-
 
 /*定义淡出动画*/
 @keyframes fadein {
