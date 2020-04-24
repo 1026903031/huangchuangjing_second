@@ -654,6 +654,8 @@ ul {
 .header ul li {
     padding: 0 17px;
     color: rgb(133,144,166);
+    word-break: keep-all;
+    line-height: 52px;
 }
 
 .header_first a{
@@ -683,7 +685,8 @@ ul {
     border-radius: 3px;
     border: 1px solid #ebebeb;
     width: 324px;
-    height: 24px;
+    height: 34px;
+    overflow: hidden;
 }
 
 .search_box label {
@@ -716,6 +719,10 @@ ul {
     border-radius:3px ;
     text-align: left;
     font-size: 15px;
+    word-break: keep-all;
+    height: 34px;
+    line-height: 34px;
+    
 }
 
 
@@ -729,6 +736,7 @@ ul {
     align-items: center;
     margin-left: 12px;
     padding: 0 12px;
+
 }
 
 /*右边*/
@@ -1065,7 +1073,7 @@ ul {
     flex-shrink: 0;
 }
 
-.content_actions .actions_first:hover {
+.content_actions .actions_first button:hover {
     background-color: rgb(217,237,255);
 }
 

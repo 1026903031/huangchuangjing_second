@@ -140,25 +140,15 @@ window.onload = function () {
     function scroll() {
         return {
             "top": document.documentElement.scrollTop + document.body.scrollTop,        //返回滑动条高度
-            "left": document.documentElement.scrollLeft + document.body.scrollLeft      //返回滑动条左侧距离
+            "left": document.documentElement.scrollLeft + document.body.scrollLeft,      //返回滑动条左侧距离
+            "right": document.documentElement.scrollright + document.body.scrollright
         }
     }
 
     
-    /*/顶部导航条左右移动
+    /*顶部导航条左右移动*/
     var header_roll = document.getElementById("header_roll");
-    var roll = scroll().left;
     
-    window.onscroll = function () {
-        if (scroll().left > -50) {
-            console.log(123);
-        } 
-
-        if (scroll().left > 1) {
-            header_roll.style.left = roll +"-50px" ;
-        } 
-    }*/
-
     //回到顶部
     var goTop = document.getElementById("goTop");
 
@@ -175,7 +165,7 @@ window.onload = function () {
             header_roll.style.animationName = "topdown";
         }
 
-        if (scroll().top > 400) {
+        if (scroll().top > 500) {
             tofixedone.style.position = "fixed";
             tofixedtwo.style.position = "fixed";
             tofixedone.style.top = "60px";
@@ -188,6 +178,21 @@ window.onload = function () {
              tofixedone.style.position = "static";
              tofixedone.style.width = "100%";
          }
+
+         if (scroll().left > 100) {
+            header_roll.style.left = -scroll().left +"px" ;
+        } else {
+            header_roll.style.left = "0px"
+        }
+
+        if (scroll().left > 90) {
+            /*console.log(scroll().left);*/
+            tofixedone.style.right ="-133px" ;
+            tofixedtwo.style.display = "none";
+        } else {
+            tofixedtwo.style.display = "block";
+            tofixedone.style.right = "" ;
+        }
     }
     
     goTop.onclick = function () {                                           //当所设置gotop元素被点击时，触发函数
