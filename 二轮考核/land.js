@@ -53,7 +53,7 @@ window.onload = function () {
     
     /*背景随时间变化而变化*/
     var land = document.querySelector(".land");
-    var homepage = document.querySelector(".homepage");
+    /*var homepage = document.querySelector(".homepage");*/
     var date = new Date();
     var hour = date.getHours();
 
@@ -80,13 +80,13 @@ window.onload = function () {
 
     /*登录跳转*/
 
-    var goto_homepage = document.getElementById("goto_homepage");
+    /*var goto_homepage = document.getElementById("goto_homepage");
 
     goto_homepage.onclick = function() {
         land.style.display = "none";
         homepage.style.display = "block";
 
-    }
+    }*/
 
 
     /*主页导航条的消失与隐藏*/
