@@ -1,62 +1,17 @@
-/*基本格式
-function getTodos() {
-    axios
-      .get("http://47.97.204.234:3000/user/state", {
-        timeout: 5000
-      })
-      .then(res => showOutput(res))
-      .catch(err => console.error(err));
-  }
-  
-// POST 请求
-function addTodo() {
-    axios
-    .post("http://47.97.204.234:3000/user/login", {
-        username: "hcj1",
-        password: "123"
-    })
-    .then(res => showOutput(res))
-    .catch(err => console.error(err));
-}
-*/
 
-/*地址
-http://47.97.204.234:3000/user/logout  退出登录
-{
-	"username": "用户名",
-	"password": "用户密码"
-}返回{
-	"result": "请求结果，成功为success，失败为failed",
-	"message": "请求结果说明"
-}
-
-http://47.97.204.234:3000/user/state 检查登录状态 GET
-{
-	"result": "请求结果，成功返回success，失败返回failed",
-	"message": "请求结果说明",
-	"userId": "如果处于登录状态，则返回用户id"
-}
-
-http://47.97.204.234:3000/user/login 用户登录
-{
-	"username": "用户名",
-	"password": "用户密码"
-}返回{
-	"result": "请求结果，成功为success，失败为failed",
-	"message": "请求结果说明",
-	"userId": "用户id，若登录失败则不会返回"
-}
-
-*/
 /*-----获取文章-----*/
+
+var $ = document.querySelector;
+
 function getArticle() {
     axios
-    .get("http://47.97.204.234:3000/article/getArticles?userId=" + uID + "&start=0&stop=18",{
+    .get("http://47.97.204.234:3000/article/getArticles?userId=" + /*"5e96e6d56dc8847e998b860f"*/uID + "&start=0&stop=18",{
 
     })
     .then(res => article_title(res))
     .catch(err => console.error(err));
 }
+
 
 /*----登录请求----*/
 
@@ -135,12 +90,13 @@ function landGo() {     //转页面
 }
 
 function toLogout() {    //向服务器请求 退出登录
+
+    this.parentNode.parentNode.style.display = "none";
     axios
     .post("http://47.97.204.234:3000/user/logout", {
         username: uName ,
         password: uPWord
     })
-
     .then( landGo() )
     .catch(err => console.error(err));
 }
@@ -173,16 +129,16 @@ userId=当前登录用户的id&start=从第几篇开始，最小为0，最大为
 }
 
 */
-function tolimit(content) {
 
-    return content.toString().slice(0,100); 
-}
+var seeContent = new Array();   //以存储文本
 
 function article_title(res) {
     console.log( res );
     console.log(typeof(res.data.articles[1].content))
     for (i in res.data.articles ) {
-        console.log(1);
+        
+        seeContent[i] = res.data.articles[i].content;
+        console.log(seeContent[i]);
         document.querySelector('.primaryCoverage').innerHTML += `
             <div class="article">
                 <div class="article_item">
@@ -192,49 +148,524 @@ function article_title(res) {
 
                     <div class="rich_Content">
                         <div class="rich_inner">
-                            <span>${tolimit(res.data.articles[i].content)}</span>
-                            <button type="button">阅读全文▼ </button>
-                            </div>
+                            <span class="readContent" >${res.data.articles[i].content }</span>
+                            <button type="button" class="readAll" index="${i}">阅读全文▼ </button>
                         </div>
+                    </div>
                                 
-                        <div class="content_actions">
-                            <span class="actions_first">
-                                <button type="button">▲ 赞同 XX</button>
-                                <button type="button">▼</button>
-                            </span>
+                    <div class="content_actions"  >
+                        <span class="actions_first">
+                           <button type="button" index="${i}" ${likedStatus(res.data.articles[i].liked)}>▲ 赞同 ${res.data.articles[i].likeNum}</button>
+                           <button type="button" index="${i}" ${dislikedStatus(res.data.articles[i].disliked)}>▼</button>
+                        </span>
                                     
-                            <div class="actions_two">
-                                <button type="button" id="comment_show">
-                                    <span class="idco">&#xe613</span>
-                                    XX条评论
-                                </button>
+                        <div class="actions_two">
+                            <button type="button" class="comment_show" index="${i}">
+                                <span class="idco">&#xe613</span>
+                                ${res.data.articles[i].commentNum} 条评论
+                           </button>
     
-                                <button type="button">
-                                    <span class="idco">&#xe6e8</span>
-                                    分享
-                                </button>
-    
-                                <button type="button">
-                                    <span class="idco">&#xe612</span>
-                                    收藏
-                                </button>
-    
-                                <button type="button">
-                                    <span class="idco">&#xe657</span>
-                                    喜欢
-                                </button>
-    
-                                <button type="button">
-                                    <span class="idco">&#xe651</span>
-                                </button>
-                            </div>
-                                    
+                            <button type="button">
+                                <span class="idco">&#xe6e8</span>
+                                分享
+                            </button>
 
+                            <button type="button">
+                                <span class="idco">&#xe612</span>
+                                收藏
+                            </button>
+
+                            <button type="button">
+                                <span class="idco">&#xe657</span>
+                                喜欢
+                            </button>
+
+                            <button type="button">
+                                <span class="idco">&#xe651</span>
+                            </button>
+
+                            
                         </div>
+                    </div>
+                        
+                        
+                    <div class="comment" index="${i}" >
+                        <div class="comment_box">
+                            <div class="comment_text">
+                                <div class="commentNum" ><h2>现有${res.data.articles[i].commentNum}条评论</h2></div>
+                            </div>
+                    
+                            <div class="comment_content">
+                                
+                            </div>
+                    
+                            <div class="comment_input">
+                                <div class="comment_input_box">
+                                    <div class="input_box">
+                                        <textarea placeholder="写下你的评论.."></textarea>
+                                        <span class="idco">0</span>
+                                    </div>
+                                    
+                                    <button type="button" id="goComment">发布</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         `;
+        
+        
+        /*阅读全文*/
+        var readAll = document.querySelectorAll('.readAll');
+        var actions_first = document.querySelectorAll('.actions_first');
+        var content_actions = document.querySelectorAll('.content_actions');
+        var comment_show = document.querySelectorAll('.comment_show');
+        var comment = document.querySelectorAll('.comment');
+    
+        for (var x = 0; x < readAll.length; x++) {  
 
+            /*展开全文*/
+            readAll[x].onclick = function(){
+                for (var i = 0 ; i < readAll.length; i++){
+                    readAll[i].style.display = 'block';
+                    readAll[i].parentNode.style.height = "85px";
+                    readAll[i].previousElementSibling.innerText = seeContent[i];
+                }
+    
+                var c = this.getAttribute("index");
+                console.log(this.getAttribute("index"));
+                this.previousElementSibling.innerText = "";
+
+                for(var a = 0 ; a < seeContent[c].length ; a++){
+                    this.previousElementSibling.innerHTML += `
+                    <p>${seeContent[c][a]}</p>
+                    <br>
+                    `
+                }
+                this.style.display = 'none';
+                this.parentNode.style.height = "auto";
+
+                console.log(content_actions[c].previousElementSibling.height , window.screen.availHeight);
+                if (content_actions[c].previousElementSibling.height < window.screen.availHeight) {
+                    content_actions[c].style.position = "fixed";
+                    content_actions[c].style.bottom = "0";
+                }
+                /*var a = document.this.parentNode.parentNode.scrollTop;
+                console.log(a);
+                window.scrollTo(0,a);*/
+                
+            }
+
+            /*点赞*/
+            actions_first[x].children[0].onclick = function(){
+                
+                var c = this.getAttribute("index");
+                var articlesid = res.data.articles[c].articleId;
+
+                console.log(c,articlesid,);
+
+                this.innerText = "";
+                
+                if ( res.data.articles[c].liked == true) {
+                    axios
+                    .post("http://47.97.204.234:3000/article/likeArticle", {
+                        userId: uID,
+                        articleId: articlesid,
+                        like: false 
+                    })
+                    .then(function (response) {
+                        res.data.articles[c].liked = false;
+                        alert(response.data.result + response.data.message);
+                    })
+                    .catch(err => console.error(err));
+                    
+                    this.style.backgroundColor = "rgb(229,242,255)";
+                    this.style.color = "#0084ff";
+                    this.innerText = "▲ 赞同 " + --res.data.articles[c].likeNum;
+
+                    console.log(res.data.articles[c].likeNum);
+
+                } else if ( res.data.articles[c].liked == false) {
+                    axios
+                    .post("http://47.97.204.234:3000/article/likeArticle", {
+                        userId: uID,
+                        articleId: articlesid,
+                        like: true 
+                    })
+                    .then(function (response) {
+                        res.data.articles[c].liked = true;
+                        alert(response.data.result + response.data.message);
+                    })
+                    .catch(err => console.error(err));
+
+                    this.style.backgroundColor = "#0084ff";
+                    this.style.color = "#fff";
+                    this.innerText = "▲ 已赞同 " + ++res.data.articles[c].likeNum;
+                    console.log(res.data.articles[c].likeNum);
+
+                    if ( res.data.articles[c].disliked == true) {
+
+                        axios
+                        .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                            userId: uID,
+                            articleId: articlesid,
+                            dislike: false 
+                        })
+                        .then(function (response) {
+                            res.data.articles[c].disliked = false;
+                            alert(response.data.result + response.data.message);
+                        })
+                        .catch(err => console.error(err));
+    
+                        
+                        this.nextElementSibling.style.backgroundColor = "rgb(229,242,255)";
+                        this.nextElementSibling.style.color = "#0084ff";
+
+                    }
+
+                }   
+                
+                
+            }
+
+            
+            /*点踩*/
+            actions_first[x].children[1].onclick = function(){
+
+                var c = this.getAttribute("index");
+                var articlesid = res.data.articles[c].articleId;
+
+                console.log(c,articlesid,);
+                
+                if ( res.data.articles[c].disliked == true) {
+
+                    axios
+                    .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                        userId: uID,
+                        articleId: articlesid,
+                        dislike: false 
+                    })
+                    .then(function (response) {
+                        res.data.articles[c].disliked = false;
+                        alert(response.data.result + response.data.message);
+                    })
+                    .catch(err => console.error(err));
+
+                    
+                    this.style.backgroundColor = "rgb(229,242,255)";
+                    this.style.color = "#0084ff";
+
+                    
+
+
+                } else if ( res.data.articles[c].disliked == false) {
+                    axios
+                    .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                        userId: uID,
+                        articleId: articlesid,
+                        dislike: true 
+                    })
+                    .then(function (response) {
+                        res.data.articles[c].disliked = true;
+                        alert(response.data.result + response.data.message);
+                    })
+                    .catch(err => console.error(err));
+
+                    this.style.backgroundColor = "#0084ff";
+                    this.style.color = "#fff";
+
+                    if ( res.data.articles[c].liked == true) {
+                        axios
+                        .post("http://47.97.204.234:3000/article/likeArticle", {
+                            userId: uID,
+                            articleId: articlesid,
+                            like: false 
+                        })
+                        .then(function (response) {
+                            res.data.articles[c].liked = false;
+                            alert(response.data.result + response.data.message);
+                        })
+                        .catch(err => console.error(err));
+                        
+                        this.previousElementSibling.style.backgroundColor = "rgb(229,242,255)";
+                        this.previousElementSibling.style.color = "#0084ff";
+                        this.previousElementSibling.innerText = "▲ 赞同 " + --res.data.articles[c].likeNum;
+    
+                        console.log(res.data.articles[c].likeNum);
+                    }
+
+                }
+
+                
+
+            }
+
+            /*显示评论*/
+            comment_show[x].onclick = function(){
+                var c = this.getAttribute("index");
+                comment[c].style.display = "block";
+
+                var id = res.data.articles[c].articleId;
+                var num = res.data.articles[c].commentNum;
+
+                console.log(c,id,num,uID);
+                if (num == 0) {
+                    return "" ;
+                } else {
+                    console.log(c);
+        
+                    axios
+                    .get("http://47.97.204.234:3000/article/getComments?userId="+ uID +"&articleId="+ id , {
+                
+                    })
+                    .then(function (response) {
+                        alert(response.data.result + response.data.message);
+                        console.log(response.data.comments.length);
+                        for(var a = 0; a < response.data.comments.length ; a++) {
+                            console.log(c);
+                            console.log(response.data.comments[a].nickname);
+                            comment[c].innerHTML += `
+                            <ul class="comment_item">
+                                            
+                                <li class=" first_commentator">
+                                    <div class="commentator">
+                                        <span>头</span>
+                                        <span>${response.data.comments[a].nickname}</span>
+                                        <span class="release_time">${response.data.comments[a].time}</span>
+                                    </div>
+                            
+                                    <div class="commentator_content">
+                                        <div class="commentator_top">
+                                            ${response.data.comments[a].content}
+                                        </div>
+                            
+                                        <div class="commentator_bottom">
+                                            <button type="button" >
+                                                <span class="idco">&#xe6e8</span>
+                                                赞 ${response.data.comments[a].likeNum}
+                                            </button>
+                            
+                                            <div class="commentator_function">
+                                                <button type="button" >
+                                                    <span class="idco">&#xe6e8</span>
+                                                    回复
+                                                </button>
+                                                <button type="button" >
+                                                    <span class="idco">&#xe6e8</span>
+                                                    踩
+                                                </button>
+                                                <button type="button" >
+                                                    <span class="idco">&#xe6e8</span>
+                                                    举报
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </li>
+                            </ul>
+                            `;
+        
+                            
+        
+                        }
+                        
+                    })
+                    .catch(err => console.error(err));
+                }
+
+                
+
+
+            
+            }
+
+        }
+
+
+        /*顶与踩*/
+        function likedStatus (liked){
+            if (liked == true){
+                console.log (liked);
+                return 'style = "background-color:#0084ff; color:#fff;" ';
+            } else {
+                return "";
+            }
+
+            
+        }
+
+        function dislikedStatus (disliked){
+
+            if (disliked == true){
+                console.log (disliked);
+                return 'style = "background-color:#0084ff; color:#fff;" ';
+            } else {
+                return "";
+            }
+        }
+        
     }
 
+    
+
+    function judgmentReview (num,id,i) {
+        
+        
+    }
+    
+    
+    
+
+
 }
+
+
+/*评论*/
+/*
+<div class="comment" >
+    <div class="comment_box">
+        <div class="comment_text">
+            <div class="commentNum" ><h2>现有XX条评论</h2></div>
+        </div>
+
+        <div class="comment_content">
+            
+            <ul class="comment_item">
+
+                <li class=" first_commentator">
+                    <div class="commentator">
+                        <span>头</span>
+                        <span>人名</span>
+                        <span class="release_time">时间</span>
+                    </div>
+
+                    <div class="commentator_content">
+                        <div class="commentator_top">
+                            评论内容
+                        </div>
+
+                        <div class="commentator_bottom">
+                            <button type="button" >
+                                <span class="idco">&#xe6e8</span>
+                                赞
+                            </button>
+
+                            <div class="commentator_function">
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    回复
+                                </button>
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    踩
+                                </button>
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    举报
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </li>
+
+                <li class="commentator_item ">
+                    <div class="division"></div>
+                    <div class="commentator">
+                        <span>头</span>
+                        <span>人名</span>
+                        <span class="release_time">时间</span>
+                    </div>
+
+                    <div class="commentator_content">
+                        <div class="commentator_top">
+                            评论内容
+                        </div>
+
+                        <div class="commentator_bottom">
+                            <button type="button" >
+                                <span class="idco">&#xe6e8</span>
+                                赞
+                            </button>
+
+                            <div class="commentator_function">
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    回复
+                                </button>
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    踩
+                                </button>
+                                <button type="button" >
+                                    <span class="idco">&#xe6e8</span>
+                                    举报
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </li>
+                
+            </ul>
+        </div>
+
+        <div class="comment_input">
+            <div class="comment_input_box">
+                <div class="input_box">
+                    <textarea placeholder="写下你的评论.."></textarea>
+                    <span class="idco">0</span>
+                </div>
+                
+                <button type="button" id="goComment">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<li class="commentator_item ">
+            <div class="division"></div>
+            <div class="commentator">
+                <span>头</span>
+                <span>人名</span>
+                <span class="release_time">时间</span>
+            </div>
+    
+            <div class="commentator_content">
+                <div class="commentator_top">
+                    评论内容
+                </div>
+    
+                <div class="commentator_bottom">
+                    <button type="button" >
+                        <span class="idco">&#xe6e8</span>
+                        赞
+                    </button>
+    
+                    <div class="commentator_function">
+                        <button type="button" >
+                            <span class="idco">&#xe6e8</span>
+                            回复
+                        </button>
+                        <button type="button" >
+                            <span class="idco">&#xe6e8</span>
+                            踩
+                        </button>
+                        <button type="button" >
+                            <span class="idco">&#xe6e8</span>
+                            举报
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </li>
+*/
+
