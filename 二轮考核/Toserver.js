@@ -5,7 +5,7 @@ var $ = document.querySelector;
 
 function getArticle() {
     axios
-    .get("http://47.97.204.234:3000/article/getArticles?userId=" + /*"5e96e6d56dc8847e998b860f"*/uID + "&start=0&stop=18",{
+    .get("http://47.97.204.234:3000/article/getArticles?userId=" + uID + "&start=0&stop=18",{
 
     })
     .then(res => article_title(res))
@@ -20,7 +20,7 @@ var userName = document.getElementById('userName');     //获取用户名
 var userPassword = document.getElementById('userPassword');     //获取密码
 var land = document.querySelector(".land");     //登录页面
 var homepage = document.querySelector(".homepage");     //主页
-var uName , uPWord , uID;
+var uName , uPWord , uID,uNickname,uAvatar;
 
 /*登录跳转*/
 document.getElementById("goto_homepage").addEventListener("click", toLogin);  //监听
@@ -28,6 +28,17 @@ document.getElementById("goto_homepage").addEventListener("click", toLogin);  //
 function homepageGo() {     //转页面
     land.style.display = "none";
     homepage.style.display = "block";
+
+    axios
+    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID ,{
+
+    })
+    .then(function(res) {
+        uNickname = res.data.nickname;
+        uAvatar = res.data.avatar;
+    })
+    .catch(err => console.error(err));
+
     getArticle();
 }
 
@@ -40,6 +51,7 @@ function toLogin() {    //登录，向服务器请求
 
     .then(res => loginRequest_status(res))
     .catch(err => console.error(err));
+
 }
 
 function loginRequest_status(res) {      //登录请求结果处理
@@ -102,36 +114,8 @@ function toLogout() {    //向服务器请求 退出登录
 }
 
 
-/*
-http://47.97.204.234:3000/article/getArticles   获取文章
-
-userId=当前登录用户的id&start=从第几篇开始，最小为0，最大为18&stop=到第几篇结束，最小为0，最大为18
-
-{
-	"result": "请求结果，成功为success，失败为failed",
-	"message": "请求结果说明",
-	"articles": [
-		{
-			"articleId": "文章id",
-			"userId": "发布该文章的用户的id",
-			"avatar": "发布该文章的用户的头像",
-			"nickname": "发布该文章的用户的昵称",
-			"introduction": "发布该文章的用户的一句话介绍",
-			"title": "文章标题",
-			"content": "文章内容",
-			"likeNum": "该文章的点赞数",
-			"liked": "当前登录用户是否已经点赞",
-			"disliked": "当前登录用户是否已经点踩",
-			"commentNum": "该文章的评论数",
-			"issueTime": "文章发布时间"
-		}
-	]
-}
-
-*/
-
 var seeContent = new Array();   //以存储文本
-
+/*获取文章等等*/
 function article_title(res) {
     console.log( res );
     console.log(typeof(res.data.articles[1].content))
@@ -146,9 +130,15 @@ function article_title(res) {
                         <h3>${res.data.articles[i].title}</h3>
                     </a>
 
-                    <div class="rich_Content">
-                        <div class="rich_inner">
-                            <span class="readContent" >${res.data.articles[i].content }</span>
+                    <div class="announcer">
+                        <span ><img class="avatar" src="${res.data.articles[i].avatar}"></span>
+                        <span style="font-weight:600;">${res.data.articles[i].nickname}</span>
+                        <span class="release_time">${res.data.articles[i].issueTime}</span>
+                    </div>
+
+                    <div class="rich_Content" index="${i}" >
+                        <div class="rich_inner" >
+                            <span class="readContent"  index="${i}" >${res.data.articles[i].content }</span>
                             <button type="button" class="readAll" index="${i}">阅读全文▼ </button>
                         </div>
                     </div>
@@ -163,6 +153,11 @@ function article_title(res) {
                             <button type="button" class="comment_show" index="${i}">
                                 <span class="idco">&#xe613</span>
                                 ${res.data.articles[i].commentNum} 条评论
+                           </button>
+
+                           <button type="button" class="comment_retract" index="${i}">
+                                <span class="idco">&#xe613</span>
+                                收起评论
                            </button>
     
                             <button type="button">
@@ -184,6 +179,11 @@ function article_title(res) {
                                 <span class="idco">&#xe651</span>
                             </button>
 
+                            <button type="button" class="retract" index="${i}">
+                                收起
+                                <span class="idco">&#xe61d</span>
+                            </button>
+
                             
                         </div>
                     </div>
@@ -195,7 +195,7 @@ function article_title(res) {
                                 <div class="commentNum" ><h2>现有${res.data.articles[i].commentNum}条评论</h2></div>
                             </div>
                     
-                            <div class="comment_content">
+                            <div class="comment_content" index="${i}">
                                 
                             </div>
                     
@@ -203,10 +203,10 @@ function article_title(res) {
                                 <div class="comment_input_box">
                                     <div class="input_box">
                                         <textarea placeholder="写下你的评论.."></textarea>
-                                        <span class="idco">0</span>
+                                        <span class="idco" style="font-size: 25px;" >&#xe78d</span>
                                     </div>
                                     
-                                    <button type="button" id="goComment">发布</button>
+                                    <button type="button" class="goComment" index="${i}" >发布</button>
                                 </div>
                             </div>
                         </div>
@@ -218,11 +218,17 @@ function article_title(res) {
         
         
         /*阅读全文*/
-        var readAll = document.querySelectorAll('.readAll');
-        var actions_first = document.querySelectorAll('.actions_first');
-        var content_actions = document.querySelectorAll('.content_actions');
-        var comment_show = document.querySelectorAll('.comment_show');
-        var comment = document.querySelectorAll('.comment');
+        var readAll = document.querySelectorAll('.readAll');            //阅读全文
+        var actions_first = document.querySelectorAll('.actions_first');      //点赞
+        var content_actions = document.querySelectorAll('.content_actions');    //试着使按钮浮动
+        var comment_show = document.querySelectorAll('.comment_show');      //评论按钮
+        var comment_retract = document.querySelectorAll('.comment_retract');      //收起评论按钮
+
+        var comment = document.querySelectorAll('.comment');            //评论框框
+        var retract = document.querySelectorAll('.retract');        //收起全文
+        var readContent = document.querySelectorAll('.readContent') //全文
+        var comment_content = document.querySelectorAll('.comment_content') //评论内容
+        var goComment = document.querySelectorAll('.goComment')  //评论
     
         for (var x = 0; x < readAll.length; x++) {  
 
@@ -247,15 +253,16 @@ function article_title(res) {
                 this.style.display = 'none';
                 this.parentNode.style.height = "auto";
 
-                console.log(content_actions[c].previousElementSibling.height , window.screen.availHeight);
-                if (content_actions[c].previousElementSibling.height < window.screen.availHeight) {
-                    content_actions[c].style.position = "fixed";
-                    content_actions[c].style.bottom = "0";
-                }
-                /*var a = document.this.parentNode.parentNode.scrollTop;
-                console.log(a);
-                window.scrollTo(0,a);*/
+                retract[c].style.display = 'inline-block';
                 
+            }
+
+            /*收起全文*/
+            retract[x].onclick = function(){ 
+                var c = this.getAttribute("index");
+                readAll[c].style.display = 'block';
+                this.style.display = 'none';
+                readContent[c].innerText = res.data.articles[i].content ;
             }
 
             /*点赞*/
@@ -402,37 +409,48 @@ function article_title(res) {
 
             }
 
+
             /*显示评论*/
             comment_show[x].onclick = function(){
                 var c = this.getAttribute("index");
-                comment[c].style.display = "block";
-
                 var id = res.data.articles[c].articleId;
                 var num = res.data.articles[c].commentNum;
 
-                console.log(c,id,num,uID);
+                for (var ii = 0; ii < comment.length; ii++) {   //评论区域关闭且删除
+                    comment[ii].style.display = "none" ;
+                    comment_content[ii].innerHTML = "";
+                    comment_retract[ii].style.display = "none";
+                    comment_show[ii].style.display = "inline-block";
+                }
+
+                comment[c].style.display = "block" ;    //显示评论区
+
+                this.nextElementSibling.style.display = "inline-block";      //隐藏按钮且显示收起按钮
+                this.style.display = "none";
+
+                console.log(c,id,num,uID);      //如果零评论则不发出请求
                 if (num == 0) {
                     return "" ;
                 } else {
-                    console.log(c);
-        
+                    
                     axios
                     .get("http://47.97.204.234:3000/article/getComments?userId="+ uID +"&articleId="+ id , {
                 
                     })
                     .then(function (response) {
+
                         alert(response.data.result + response.data.message);
                         console.log(response.data.comments.length);
                         for(var a = 0; a < response.data.comments.length ; a++) {
-                            console.log(c);
+                            
                             console.log(response.data.comments[a].nickname);
-                            comment[c].innerHTML += `
-                            <ul class="comment_item">
+                            comment_content[c].innerHTML += `
+                            <ul class="comment_item" index="${a}">
                                             
                                 <li class=" first_commentator">
                                     <div class="commentator">
-                                        <span>头</span>
-                                        <span>${response.data.comments[a].nickname}</span>
+                                        <span ><img class="avatar" src="${response.data.comments[a].avatar}"></span>
+                                        <span style="font-weight:600;" >${response.data.comments[a].nickname}</span>
                                         <span class="release_time">${response.data.comments[a].time}</span>
                                     </div>
                             
@@ -441,38 +459,440 @@ function article_title(res) {
                                             ${response.data.comments[a].content}
                                         </div>
                             
-                                        <div class="commentator_bottom">
-                                            <button type="button" >
-                                                <span class="idco">&#xe6e8</span>
+                                        <div class="commentator_bottom" index="${a}">
+                                            <button type="button" class="toLike" index="${a}" ${Statusliked(response.data.comments[a].liked)} >
+                                                <span class="idco">&#xe700</span>
                                                 赞 ${response.data.comments[a].likeNum}
                                             </button>
                             
-                                            <div class="commentator_function">
-                                                <button type="button" >
-                                                    <span class="idco">&#xe6e8</span>
+                                            <div class="commentator_function" index="${a}">
+                                                <button type="button" class="reply_Comment" >
+                                                    <span class="idco">&#xe647</span>
                                                     回复
                                                 </button>
-                                                <button type="button" >
-                                                    <span class="idco">&#xe6e8</span>
+
+                                                <button type="button" class="reply_Comment_Close" >
+                                                    <span class="idco">&#xe647</span>
+                                                    收起回复
+                                                </button>
+
+
+                                                <button type="button"  class="toDislike" ${Statusdisliked(response.data.comments[a].disliked)}>
+                                                    <span class="idco" style="font-size: 15px;" >&#xe694</span>
                                                     踩
                                                 </button>
                                                 <button type="button" >
-                                                    <span class="idco">&#xe6e8</span>
+                                                    <span class="idco" style="font-size: 15px;" >&#xe607</span>
                                                     举报
                                                 </button>
+                                                
+                                                <button type="button" class="delete_Comment" index="${a}" style="display:${addButton(response.data.comments[a].userId)}">
+                                                    <span class="idco">&#xe628</span>
+                                                    删除
+                                                </button>
+
                                             </div>
                                             
                                         </div>
                                     </div>
                                     
                                 </li>
+
+                                <div class="reply_input" index="${a}">
+                                    <div class="reply_input_box">
+                                        <div class="input_replybox" index="${a}" >
+                                            <textarea placeholder="回复${response.data.comments[a].nickname}.."></textarea>
+                                            <span class="idco" style="font-size: 25px;" >&#xe78d</span>
+                                        </div>
+                                
+                                        <button type="button" class="reply" index="${a}" >回复</button>
+                                    </div>
+                                </div>
+
+                                
+
+
                             </ul>
                             `;
-        
+
+                            /*显示回复*/
+                            add_Replies(response.data.comments[a].replied,a);
+                            function add_Replies(replied){
+                                var aaa = a ;
+                                var bbbb = 0;
+
+                                if(replied == true){
+                                    
+                                    console.log (aaa);
+                                    axios
+                                    .get("http://47.97.204.234:3000/article/getReplies?userId=" + uID + "&commentId=" + response.data.comments[a].commentId , {
+                                    })
+                                    .then(function (resp) {
+
+                                        console.log(resp.data.replies.length);
+
+                                        for (var aa = 0 ; aa < resp.data.replies.length ; aa++){
+                                            comment_item[aaa].innerHTML += `
+                                            <li class="commentator_item " index="${aaa}">
+                                                <div class="division"></div>
+                                                <div class="commentator">
+                                                    <span ><img class="avatar" src="${resp.data.replies[aa].avatar}"></span>
+                                                    <span style="font-weight:600;" >${resp.data.replies[aa].nickname}</span>
+                                                    <span class="release_time">${resp.data.replies[aa].time}</span>
+                                                </div>
                             
+                                                <div class="commentator_content">
+                                                    <div class="commentator_top">
+                                                        ${resp.data.replies[aa].content}
+                                                    </div>
+                            
+                                                    <div class="commentator_bottom" index="${aa}">
+                                                        <button type="button" class="toLike_reply" index="${aa}" ${Statusliked(resp.data.replies[aa].liked)} >
+                                                            <span class="idco">&#xe700</span>
+                                                            赞 ${resp.data.replies[aa].likeNum}
+                                                        </button>
+                            
+                                                        <div class="commentator_function" index="${aa}">
+
+                                                            <button type="button"  class="toDislike_reply" ${Statusdisliked(resp.data.replies[aa].disliked)}>
+                                                                <span class="idco" style="font-size: 15px;" >&#xe694</span>
+                                                                踩
+                                                            </button>
+
+                                                            <button type="button" >
+                                                                <span class="idco" style="font-size: 15px;" >&#xe607</span>
+                                                                举报
+                                                            </button>
+
+                                                            <button type="button" class="delete_replie" index="${bbbb}" style="display:${addButton(resp.data.replies[aa].userId)}">
+                                                                <span class="idco">&#xe628</span>
+                                                                删除
+                                                            </button>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            `;
+
+                                            bbbb++;
+
+                                            var toLike_reply = document.querySelectorAll('.toLike_reply');
+                                            var toDislike_reply = document.querySelectorAll('.toDislike_reply');
+                                            var delete_replie = document.querySelectorAll('.delete_replie');
+
+                                            for (var xxx = 0; xxx < toLike_reply.length ; xxx++) {
+                                
+                                                /*点赞*/                                            
+                                                toLike_reply[xxx].onclick = function(){  
+                                                    var cc = this.parentNode.getAttribute("index");
+                                                    console.log(cc,resp.data.replies[cc].replyId,xxx);
+                                                    
+                                                    
+                                                    if ( resp.data.replies[cc].liked == true) {
+                                                        axios
+                                                        .post("http://47.97.204.234:3000/article/likeReply", {
+                                                            userId: uID,
+                                                            replyId: resp.data.replies[cc].replyId,
+                                                            like: false 
+                                                        })
+                                                        .then(function (respo) {
+                                                            
+                                                            alert(respo.data.result + respo.data.message);
+                                                            comment_show[c].onclick();
+                                                        })
+                                                        .catch(err => console.error(err));
+                                                    } else if ( resp.data.replies[cc].liked == false) {
+                                                        axios
+                                                        .post("http://47.97.204.234:3000/article/likeReply", {
+                                                            userId: uID,
+                                                            replyId: resp.data.replies[cc].replyId,
+                                                            like: true 
+                                                        })
+                                                        .then(function (respo) {
+                                                            
+                                                            alert(respo.data.result + respo.data.message);
+                                                            comment_show[c].onclick();
+                                                        })
+                                                        .catch(err => console.error(err));
+                                                    }
+
+                                                }
+
+                                                /*点踩*/
+                                                toDislike_reply[xxx].onclick = function(){  
+                                                    var cc = this.parentNode.getAttribute("index");
+                                                    console.log(cc,resp.data.replies[cc].replyId,xxx);
+                                                    
+                                                    
+                                                    if ( resp.data.replies[cc].disliked == true) {
+                                                        axios
+                                                        .post("http://47.97.204.234:3000/article/dislikeReply", {
+                                                            userId: uID,
+                                                            replyId: resp.data.replies[cc].replyId,
+                                                            dislike: false 
+                                                        })
+                                                        .then(function (respo) {
+                                                            
+                                                            alert(respo.data.result + respo.data.message);
+                                                            comment_show[c].onclick();
+                                                        })
+                                                        .catch(err => console.error(err));
+                                                    } else if ( resp.data.replies[cc].disliked == false) {
+                                                        axios
+                                                        .post("http://47.97.204.234:3000/article/dislikeReply", {
+                                                            userId: uID,
+                                                            replyId: resp.data.replies[cc].replyId,
+                                                            dislike: true 
+                                                        })
+                                                        .then(function (respo) {
+                                                            
+                                                            alert(respo.data.result + respo.data.message);
+                                                            comment_show[c].onclick();
+                                                        })
+                                                        .catch(err => console.error(err));
+                                                    }
+
+                                                }
+
+                                                delete_replie[xxx].onclick = function(){
+                                                    var ccc = this.parentNode.getAttribute('index');
+                                                    var cc = this.getAttribute('index');
+                                                    alert(resp.data.replies[cc].nickname,uNickname);                    /*这里*/
+                                                        
+
+                                                    axios
+                                                    .delete("http://47.97.204.234:3000/article/deleteReply" , {
+                                                        data:{
+                                                            userId: uID,
+                                                            replyId: resp.data.replies[cc].replyId
+                                                        }
+                                                    })
+                                                    .then(function (respo){
+                                                        
+                                                        alert(respo.data.result + respo.data.message);
+                                                        comment_show[c].onclick();
+                                                    })
+                                                    .catch(err => console.error(err));
+
+                                                }
+
+                                                
+                                            }
+
+                                        }
+                                        alert(resp.data.result + resp.data.message);
+                                    })
+                                    .catch(err => console.error(err));
+                                    
+                                } 
+                                
+                            }
+
+                            var toLike = document.querySelectorAll('.toLike') //点赞
+                            var toDislike = document.querySelectorAll('.toDislike') //点踩
+                            var comment_item = document.querySelectorAll('.comment_item') //总框框
+                            var reply_Comment = document.querySelectorAll('.reply_Comment') //回复评论
+                            var reply_Comment_Close = document.querySelectorAll('.reply_Comment_Close') //收起回复评论
+                            var delete_Comment = document.querySelectorAll('.delete_Comment') //删除评论
+                            var reply_input = document.querySelectorAll('.reply_input') //收起回复评论
+
+                            var reply = document.querySelectorAll('.reply') //回复评论
+                            var input_replybox = document.querySelectorAll('.input_replybox') //回复内容
+                            
+                            function addButton(userId) {        //根据id来添加删除按钮
+                                if (userId == uID) {
+                                    console.log(123)
+                                    
+                                    return `
+                                    inline-block;
+                                    `;
+                                } else {
+                                    return `
+                                    none;
+                                    `;
+                                }
+                            }
+                            
+                            
+
+                            for (var xx = 0; xx < toLike.length; xx++) {
+                                console.log(xx);
+
+                                /*点赞*/
+                                toLike[xx].onclick = function(){
+                                    console.log(xx);
+                                    var cc = this.parentNode.getAttribute("index");
+                                    console.log(cc,response.data.comments[cc].commentId,xx);
+                                    /*this.innerText = "";*/
+
+                                    if ( response.data.comments[cc].liked == true) {
+                                        axios
+                                        .post("http://47.97.204.234:3000/article/likeComment", {
+                                            userId: uID,
+                                            commentId: response.data.comments[cc].commentId,
+                                            like: false 
+                                        })
+                                        .then(function (resp) {
+                                            comment_show[c].onclick();
+                                            alert(resp.data.result + resp.data.message);
+                                        })
+                                        .catch(err => console.error(err));
+    
+                                        console.log(response.data.comments[cc].likeNum);
+    
+                                    } else if ( response.data.comments[cc].liked == false ) {
+                                        axios
+                                        .post("http://47.97.204.234:3000/article/likeComment", {
+                                            userId: uID,
+                                            commentId: response.data.comments[cc].commentId,
+                                            like: true 
+                                        })
+                                        .then(function (resp) {
+                                            comment_show[c].onclick();
+                                            alert(resp.data.result + resp.data.message);
+                                        })
+                                        .catch(err => console.error(err));
+    
+                                        
+                                        /*this.style.color = "#0084ff";
+                                        this.innerHTML = `<span class="idco">&#xe6e8</span>
+                                        赞 ${++response.data.comments[cc].likeNum} `;
+    
+                                        console.log(response.data.comments[cc].likeNum);       
+
+                                        if ( response.data.comments[cc].disliked == true) {     //判断是否需要踩
+                                            axios
+                                            .post("http://47.97.204.234:3000/article/dislikeComment", {
+                                                userId: uID,
+                                                commentId: response.data.comments[cc].commentId,
+                                                dislike: false 
+                                            })
+                                            .then(function (resp) {
+                                                response.data.comments[cc].disliked = false;
+                                                alert(resp.data.result + resp.data.message);
+                                            })
+                                            .catch(err => console.error(err));
         
+                                            toDislike[cc].style.color = "rgb(133,144,166)";  //踩按钮变灰
+        
+                                        }*/
+    
+                                    }
+                                }
+
+                                /*点踩*/
+                                toDislike[xx].onclick = function(){
+                                    
+                                    var cc = this.parentNode.getAttribute("index");
+
+                                    console.log(cc,response.data.comments[cc].commentId,xx);
+
+                                    if ( response.data.comments[cc].disliked == true) {
+                                        axios
+                                        .post("http://47.97.204.234:3000/article/dislikeComment", {
+                                            userId: uID,
+                                            commentId: response.data.comments[cc].commentId,
+                                            dislike: false 
+                                        })
+                                        .then(function (resp) {
+                                            comment_show[c].onclick();
+                                            alert(resp.data.result + resp.data.message);
+                                        })
+                                        .catch(err => console.error(err));
+    
+                                        /*this.style.color = "rgb(133,144,166)";*/
+    
+                                    } else if ( response.data.comments[cc].disliked == false ) {
+                                        axios
+                                        .post("http://47.97.204.234:3000/article/dislikeComment", {
+                                            userId: uID,
+                                            commentId: response.data.comments[cc].commentId,
+                                            dislike: true 
+                                        })
+                                        .then(function (resp) {
+                                            comment_show[c].onclick();
+                                            alert(resp.data.result + resp.data.message);
+                                        })
+                                        .catch(err => console.error(err));
+    
+                                    }
+                                }
+
+                                /*删除*/
+                                delete_Comment[xx].onclick = function(){
+                                    var cc = this.getAttribute("index");
+
+                                    console.log(uID,response.data.comments[cc].commentId);
+                                    
+                                    axios
+                                    .delete("http://47.97.204.234:3000/article/deleteComment", {
+                                        data:{
+                                            userId: uID ,
+                                            commentId: response.data.comments[cc].commentId
+                                        }
+                                    })
+                                    .then(function (resp) {
+                                        comment_show[c].onclick();
+                                        alert(resp.data.result + resp.data.message);
+                                    })
+                                    .catch(err => console.error(err));
+                                    
+    
+                                }
+
+                                /*回复框框*/
+                                reply_Comment[xx].onclick = function(){
+
+                                    for (var iii = 0; iii < reply_Comment.length; iii++) {   //评论区域关闭且删除
+                                        reply_input[iii].style.display = "none" ;
+                                        
+                                        reply_Comment_Close[iii].style.display = "none";
+                                        reply_Comment[iii].style.display = "inline-block";
+                                    }
+
+                                    var cc = this.parentNode.getAttribute("index");
+                                    reply_input[cc].style.display = "block";
+                                    this.nextElementSibling.style.display = "inline-block";      //隐藏按钮且显示收起按钮
+                                    this.style.display = "none";
+                                }
+
+                                /*收起回复按钮*/
+                                reply_Comment_Close[xx].onclick = function(){
+
+                                    var cc = this.parentNode.getAttribute("index");
+                                    reply_input[cc].style.display = "none";
+                                    this.previousElementSibling.style.display = "inline-block";      //隐藏按钮且显示收起按钮
+                                    this.style.display = "none";
+                                }
+
+                                /*回复*/
+                                reply[xx].onclick = function(){
+                                    var cc = this.getAttribute("index");
+
+                                    if ( text = "" ) {
+                                        alert('宁没有输入内容');
+                                    } else {
+                                        axios
+                                        .post("http://47.97.204.234:3000/article/reply",{
+                                            userId: uID ,
+	                                        commentId: response.data.comments[cc].commentId,
+	                                        content: input_replybox[cc].children[0].value
+                                        })
+                                        .then(function(resp) {
+                                            comment_show[c].onclick();
+                                            alert(resp.data.result + resp.data.message +":"+ input_replybox[cc].children[0].value);
+                                            input_replybox[cc].children[0].value = "";
+                                        })
+                                        .catch(err => console.error(err));
+                                    }
+                                }
+
+    
+                            }
+                            
                         }
-                        
                     })
                     .catch(err => console.error(err));
                 }
@@ -483,6 +903,46 @@ function article_title(res) {
             
             }
 
+            /*收起评论*/
+            comment_retract[x].onclick = function(){
+                var c = this.getAttribute("index");
+
+                comment_content[c].innerHTML = "";      //清除内容
+
+                comment[c].style.display = "none" ;    //关闭评论区
+
+                this.previousElementSibling.style.display = "inline-block";      //隐藏按钮且显示评论按钮
+                this.style.display = "none";
+            }
+
+            /*发布评论*/
+            goComment[x].onclick = function(){
+                var c = this.getAttribute("index");
+                console.log(1);
+                var text = this.previousElementSibling.children[0].value;
+                this.previousElementSibling.children[0].value = "";
+                console.log(text);
+                
+                if (text == "") {
+                    alert('宁没有输入内容');
+                } else {
+                    axios
+                    .post("http://47.97.204.234:3000/article/comment", {
+                
+                      userId: uID,
+                      articleId: res.data.articles[c].articleId ,
+                      content: text
+                    })
+                    .then(function (response) {
+                        alert(response.data.result + response.data.message+ response.data.commentId);
+                        comment_show[c].onclick();
+                    })
+                    .catch(err => console.error(err));
+                }
+                
+
+                
+            }
         }
 
 
@@ -507,17 +967,30 @@ function article_title(res) {
                 return "";
             }
         }
+
+        function Statusliked (liked){
+            if (liked == true){
+                console.log (liked);
+                return 'style = "color:#0084ff;"';
+            } else {
+                return "";
+            }
+
+            
+        }
+
+        function Statusdisliked (disliked){
+
+            if (disliked == true){
+                console.log (disliked);
+                return 'style = "color:#0084ff;"';
+            } else {
+                return "";
+            }
+        }
         
     }
 
-    
-
-    function judgmentReview (num,id,i) {
-        
-        
-    }
-    
-    
     
 
 
@@ -667,5 +1140,8 @@ function article_title(res) {
             </div>
             
         </li>
+
+
+        
 */
 
