@@ -78,17 +78,6 @@ if (hour >= 19 && hour < 24){
     console.log("打打打打代码");
 }
 
-/*登录跳转*/
-
-/*var goto_homepage = document.getElementById("goto_homepage");
-
-goto_homepage.onclick = function() {
-    land.style.display = "none";
-    homepage.style.display = "block";
-
-}*/
-
-
 /*主页导航条的消失与隐藏*/
 var bell = document.getElementById("bell");
 var bell_show = document.querySelector(".bell_show");
@@ -125,7 +114,10 @@ information.onclick = function() {
     } else {
         information_show.style.display = "none";
     }
+}
 
+people_show.onclick = function() {
+    people_show.style.display = "none";
 }
 
 var homepage_main = document.querySelector(".homepage_main");
@@ -152,6 +144,7 @@ function scroll() {
 
 /*顶部导航条左右移动*/
 var header_roll = document.getElementById("header_roll");
+
 
 //回到顶部
 var goTop = document.getElementById("goTop");
@@ -184,10 +177,12 @@ window.onscroll = function () {
          tofixedone.style.width = "100%";
      }
 
-     if (scroll().left > 100) {
+     if (scroll().left > 95) {
         header_roll.style.left = -scroll().left +"px" ;
+
     } else {
         header_roll.style.left = "0px"
+
     }
 
     if (scroll().left > 90) {
@@ -211,46 +206,3 @@ goTop.onclick = function () {                                           //当所
         }
     }, 30)
 }
-
-/*评论框框的显示*/
-/*var comment_show = document.getElementById("comment_show");
-var comment = document.getElementById("comment");
-
-comment_show.onclick = function() {
-    if (comment.style.display == "none") {
-        comment.style.display = "block";
-        console.log(123);
-        
-    } else {
-        comment.style.display = "none";
-    }
-        
-}*/
-/*简易的评论功能          ---   还未完善！！！！！*/
-/*var goComment = this.document.getElementById("goComment");
-var text = this.document.querySelector('textarea');
-var input_text = this.document.querySelector('.comment_item');
-
-goComment.onclick = function() {
-    if (text.value == '') {
-        alert('宁没有输入内容');
-        return false;
-    } else {
-        var li = document.createElement('li');
-        li.innerHTML = text.value + '<a href ="javascript:;" id="delete" >删除</a>';
-        
-        input_text.appendChild(li);
-
-        /*input_text.insertBefore(li,input_text.children[0]);
-
-        var conmmentDelete = document.getElementById('delete');
-        
-        for(var i = 0 ;i < conmmentDelete.length; i++) {
-            conmmentDelete[i].onclick = function () {
-                input_text.removeChild(this.parentNode);
-            }
-        }
-    
-    }
-    
-}*/

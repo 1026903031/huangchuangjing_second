@@ -10,6 +10,18 @@ function getArticle() {
     })
     .then(res => article_title(res))
     .catch(err => console.error(err));
+
+    axios
+    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID ,{
+
+    })
+    .then(function(res) {
+        uNickname = res.data.info.nickname;
+    uAvatar = res.data.info.avatar;
+    document.querySelector('.people_Avatar').innerHTML = `<img src="${uAvatar}" ></img>`;
+    })
+    .catch(err => console.error(err));
+
 }
 
 
@@ -20,6 +32,9 @@ var userName = document.getElementById('userName');     //获取用户名
 var userPassword = document.getElementById('userPassword');     //获取密码
 var land = document.querySelector(".land");     //登录页面
 var homepage = document.querySelector(".homepage");     //主页
+var personal_Homepage = document.querySelector(".personal_Homepage");   //个人主页
+var header  = document.querySelector(".header");    //导航条
+
 var uName , uPWord , uID,uNickname,uAvatar;
 
 /*登录跳转*/
@@ -28,29 +43,21 @@ document.getElementById("goto_homepage").addEventListener("click", toLogin);  //
 function homepageGo() {     //转页面
     land.style.display = "none";
     homepage.style.display = "block";
-
-    axios
-    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID ,{
-
-    })
-    .then(function(res) {
-        uNickname = res.data.nickname;
-        uAvatar = res.data.avatar;
-    })
-    .catch(err => console.error(err));
-
+    header.style.display = "block";
+    personal_Homepage.style.display = "none";
+    document.querySelector('.showblueOne').style.display = "block";  
     getArticle();
 }
 
 function toLogin() {    //登录，向服务器请求
+
     axios
     .post("http://47.97.204.234:3000/user/login", {
-        username: userName.value ,
-        password: userPassword.value
-    })
-
-    .then(res => loginRequest_status(res))
-    .catch(err => console.error(err));
+        username: userName.value,   //输入框内容（账号）
+        password: userPassword.value    //输入框内容 （密码）
+    },{withCredentials:true})
+    .then(res => loginRequest_status(res))      //成功，调用函数使用得到的参数（json）
+    .catch(err => console.error(err));      //错误，报错
 
 }
 
@@ -99,6 +106,8 @@ function landGo() {     //转页面
     alert("退出成功！");
     land.style.display = "block";
     homepage.style.display = "none";
+    header.style.display = "none";
+    personal_Homepage.style.display = "none";
 }
 
 function toLogout() {    //向服务器请求 退出登录
@@ -117,12 +126,13 @@ function toLogout() {    //向服务器请求 退出登录
 var seeContent = new Array();   //以存储文本
 /*获取文章等等*/
 function article_title(res) {
-    console.log( res );
-    console.log(typeof(res.data.articles[1].content))
+    document.querySelector('.primaryCoverage').innerHTML = "";
+    /*console.log( res );
+    console.log(typeof(res.data.articles[1].content))*/
     for (i in res.data.articles ) {
         
         seeContent[i] = res.data.articles[i].content;
-        console.log(seeContent[i]);
+        /*console.log(seeContent[i]);*/
         document.querySelector('.primaryCoverage').innerHTML += `
             <div class="article">
                 <div class="article_item">
@@ -241,7 +251,7 @@ function article_title(res) {
                 }
     
                 var c = this.getAttribute("index");
-                console.log(this.getAttribute("index"));
+                /*console.log(this.getAttribute("index"));*/
                 this.previousElementSibling.innerText = "";
 
                 for(var a = 0 ; a < seeContent[c].length ; a++){
@@ -271,7 +281,7 @@ function article_title(res) {
                 var c = this.getAttribute("index");
                 var articlesid = res.data.articles[c].articleId;
 
-                console.log(c,articlesid,);
+                /*console.log(c,articlesid,);*/
 
                 this.innerText = "";
                 
@@ -284,7 +294,7 @@ function article_title(res) {
                     })
                     .then(function (response) {
                         res.data.articles[c].liked = false;
-                        alert(response.data.result + response.data.message);
+                        /*alert(response.data.result + response.data.message);*/
                     })
                     .catch(err => console.error(err));
                     
@@ -292,7 +302,7 @@ function article_title(res) {
                     this.style.color = "#0084ff";
                     this.innerText = "▲ 赞同 " + --res.data.articles[c].likeNum;
 
-                    console.log(res.data.articles[c].likeNum);
+                    /*console.log(res.data.articles[c].likeNum);*/
 
                 } else if ( res.data.articles[c].liked == false) {
                     axios
@@ -303,14 +313,14 @@ function article_title(res) {
                     })
                     .then(function (response) {
                         res.data.articles[c].liked = true;
-                        alert(response.data.result + response.data.message);
+                        /*alert(response.data.result + response.data.message);*/
                     })
                     .catch(err => console.error(err));
 
                     this.style.backgroundColor = "#0084ff";
                     this.style.color = "#fff";
                     this.innerText = "▲ 已赞同 " + ++res.data.articles[c].likeNum;
-                    console.log(res.data.articles[c].likeNum);
+                    /*console.log(res.data.articles[c].likeNum);*/
 
                     if ( res.data.articles[c].disliked == true) {
 
@@ -322,7 +332,7 @@ function article_title(res) {
                         })
                         .then(function (response) {
                             res.data.articles[c].disliked = false;
-                            alert(response.data.result + response.data.message);
+                            /*alert(response.data.result + response.data.message);*/
                         })
                         .catch(err => console.error(err));
     
@@ -344,7 +354,7 @@ function article_title(res) {
                 var c = this.getAttribute("index");
                 var articlesid = res.data.articles[c].articleId;
 
-                console.log(c,articlesid,);
+                /*console.log(c,articlesid,);*/
                 
                 if ( res.data.articles[c].disliked == true) {
 
@@ -356,7 +366,7 @@ function article_title(res) {
                     })
                     .then(function (response) {
                         res.data.articles[c].disliked = false;
-                        alert(response.data.result + response.data.message);
+                        /*alert(response.data.result + response.data.message);*/
                     })
                     .catch(err => console.error(err));
 
@@ -376,7 +386,7 @@ function article_title(res) {
                     })
                     .then(function (response) {
                         res.data.articles[c].disliked = true;
-                        alert(response.data.result + response.data.message);
+                        /*alert(response.data.result + response.data.message);*/
                     })
                     .catch(err => console.error(err));
 
@@ -392,7 +402,7 @@ function article_title(res) {
                         })
                         .then(function (response) {
                             res.data.articles[c].liked = false;
-                            alert(response.data.result + response.data.message);
+                            /*alert(response.data.result + response.data.message);*/
                         })
                         .catch(err => console.error(err));
                         
@@ -400,7 +410,7 @@ function article_title(res) {
                         this.previousElementSibling.style.color = "#0084ff";
                         this.previousElementSibling.innerText = "▲ 赞同 " + --res.data.articles[c].likeNum;
     
-                        console.log(res.data.articles[c].likeNum);
+                        /*console.log(res.data.articles[c].likeNum);*/
                     }
 
                 }
@@ -412,6 +422,7 @@ function article_title(res) {
 
             /*显示评论*/
             comment_show[x].onclick = function(){
+                var bbbb = 0;
                 var c = this.getAttribute("index");
                 var id = res.data.articles[c].articleId;
                 var num = res.data.articles[c].commentNum;
@@ -428,7 +439,7 @@ function article_title(res) {
                 this.nextElementSibling.style.display = "inline-block";      //隐藏按钮且显示收起按钮
                 this.style.display = "none";
 
-                console.log(c,id,num,uID);      //如果零评论则不发出请求
+                /*console.log(c,id,num,uID);  */    //如果零评论则不发出请求
                 if (num == 0) {
                     return "" ;
                 } else {
@@ -439,11 +450,11 @@ function article_title(res) {
                     })
                     .then(function (response) {
 
-                        alert(response.data.result + response.data.message);
-                        console.log(response.data.comments.length);
+                        /*alert(response.data.result + response.data.message);*/
+                        /*console.log(response.data.comments.length);*/
                         for(var a = 0; a < response.data.comments.length ; a++) {
                             
-                            console.log(response.data.comments[a].nickname);
+                            /*console.log(response.data.comments[a].nickname);*/
                             comment_content[c].innerHTML += `
                             <ul class="comment_item" index="${a}">
                                             
@@ -516,20 +527,19 @@ function article_title(res) {
                             `;
 
                             /*显示回复*/
-                            add_Replies(response.data.comments[a].replied,a);
-                            function add_Replies(replied){
+                            add_Replies(response.data.comments[a].replied, a);
+                            function add_Replies(replied, a ){
                                 var aaa = a ;
-                                var bbbb = 0;
 
                                 if(replied == true){
-                                    
-                                    console.log (aaa);
+
+                                    /*console.log (aaa);*/
                                     axios
                                     .get("http://47.97.204.234:3000/article/getReplies?userId=" + uID + "&commentId=" + response.data.comments[a].commentId , {
                                     })
                                     .then(function (resp) {
 
-                                        console.log(resp.data.replies.length);
+                                        /*console.log(resp.data.replies.length);*/
 
                                         for (var aa = 0 ; aa < resp.data.replies.length ; aa++){
                                             comment_item[aaa].innerHTML += `
@@ -577,6 +587,7 @@ function article_title(res) {
                                             `;
 
                                             bbbb++;
+                                            
 
                                             var toLike_reply = document.querySelectorAll('.toLike_reply');
                                             var toDislike_reply = document.querySelectorAll('.toDislike_reply');
@@ -587,7 +598,7 @@ function article_title(res) {
                                                 /*点赞*/                                            
                                                 toLike_reply[xxx].onclick = function(){  
                                                     var cc = this.parentNode.getAttribute("index");
-                                                    console.log(cc,resp.data.replies[cc].replyId,xxx);
+                                                    /*console.log(cc,resp.data.replies[cc].replyId,xxx);*/
                                                     
                                                     
                                                     if ( resp.data.replies[cc].liked == true) {
@@ -599,7 +610,7 @@ function article_title(res) {
                                                         })
                                                         .then(function (respo) {
                                                             
-                                                            alert(respo.data.result + respo.data.message);
+                                                            /*alert(respo.data.result + respo.data.message);*/
                                                             comment_show[c].onclick();
                                                         })
                                                         .catch(err => console.error(err));
@@ -612,7 +623,7 @@ function article_title(res) {
                                                         })
                                                         .then(function (respo) {
                                                             
-                                                            alert(respo.data.result + respo.data.message);
+                                                            /*alert(respo.data.result + respo.data.message);*/
                                                             comment_show[c].onclick();
                                                         })
                                                         .catch(err => console.error(err));
@@ -623,7 +634,7 @@ function article_title(res) {
                                                 /*点踩*/
                                                 toDislike_reply[xxx].onclick = function(){  
                                                     var cc = this.parentNode.getAttribute("index");
-                                                    console.log(cc,resp.data.replies[cc].replyId,xxx);
+                                                    /*console.log(cc,resp.data.replies[cc].replyId,xxx);*/
                                                     
                                                     
                                                     if ( resp.data.replies[cc].disliked == true) {
@@ -634,8 +645,7 @@ function article_title(res) {
                                                             dislike: false 
                                                         })
                                                         .then(function (respo) {
-                                                            
-                                                            alert(respo.data.result + respo.data.message);
+                                                            /*alert(respo.data.result + respo.data.message);*/
                                                             comment_show[c].onclick();
                                                         })
                                                         .catch(err => console.error(err));
@@ -648,7 +658,7 @@ function article_title(res) {
                                                         })
                                                         .then(function (respo) {
                                                             
-                                                            alert(respo.data.result + respo.data.message);
+                                                            /*alert(respo.data.result + respo.data.message);*/
                                                             comment_show[c].onclick();
                                                         })
                                                         .catch(err => console.error(err));
@@ -656,17 +666,17 @@ function article_title(res) {
 
                                                 }
 
+                                                /*删除回复*/
                                                 delete_replie[xxx].onclick = function(){
                                                     var ccc = this.parentNode.getAttribute('index');
                                                     var cc = this.getAttribute('index');
-                                                    alert(resp.data.replies[cc].nickname,uNickname);                    /*这里*/
-                                                        
+                                                   /* alert(resp.data.replies[ccc].nickname + uNickname + bbbb); */                   /*这里*/
 
                                                     axios
                                                     .delete("http://47.97.204.234:3000/article/deleteReply" , {
                                                         data:{
                                                             userId: uID,
-                                                            replyId: resp.data.replies[cc].replyId
+                                                            replyId: resp.data.replies[ccc].replyId
                                                         }
                                                     })
                                                     .then(function (respo){
@@ -682,7 +692,7 @@ function article_title(res) {
                                             }
 
                                         }
-                                        alert(resp.data.result + resp.data.message);
+                                        /*alert(resp.data.result + resp.data.message);*/
                                     })
                                     .catch(err => console.error(err));
                                     
@@ -703,7 +713,7 @@ function article_title(res) {
                             
                             function addButton(userId) {        //根据id来添加删除按钮
                                 if (userId == uID) {
-                                    console.log(123)
+                                    /*console.log(123)*/
                                     
                                     return `
                                     inline-block;
@@ -716,15 +726,15 @@ function article_title(res) {
                             }
                             
                             
-
                             for (var xx = 0; xx < toLike.length; xx++) {
-                                console.log(xx);
+                                /*console.log(xx);*/
 
                                 /*点赞*/
                                 toLike[xx].onclick = function(){
-                                    console.log(xx);
+                                    
                                     var cc = this.parentNode.getAttribute("index");
-                                    console.log(cc,response.data.comments[cc].commentId,xx);
+                                    /*console.log('点赞序号：' + cc);*/
+                                    /*console.log(cc,response.data.comments[cc].commentId,xx);*/
                                     /*this.innerText = "";*/
 
                                     if ( response.data.comments[cc].liked == true) {
@@ -736,11 +746,11 @@ function article_title(res) {
                                         })
                                         .then(function (resp) {
                                             comment_show[c].onclick();
-                                            alert(resp.data.result + resp.data.message);
+                                            /*alert(resp.data.result + resp.data.message);*/
                                         })
                                         .catch(err => console.error(err));
     
-                                        console.log(response.data.comments[cc].likeNum);
+                                        /*console.log(response.data.comments[cc].likeNum);*/
     
                                     } else if ( response.data.comments[cc].liked == false ) {
                                         axios
@@ -751,33 +761,9 @@ function article_title(res) {
                                         })
                                         .then(function (resp) {
                                             comment_show[c].onclick();
-                                            alert(resp.data.result + resp.data.message);
+                                            /*alert(resp.data.result + resp.data.message);*/
                                         })
                                         .catch(err => console.error(err));
-    
-                                        
-                                        /*this.style.color = "#0084ff";
-                                        this.innerHTML = `<span class="idco">&#xe6e8</span>
-                                        赞 ${++response.data.comments[cc].likeNum} `;
-    
-                                        console.log(response.data.comments[cc].likeNum);       
-
-                                        if ( response.data.comments[cc].disliked == true) {     //判断是否需要踩
-                                            axios
-                                            .post("http://47.97.204.234:3000/article/dislikeComment", {
-                                                userId: uID,
-                                                commentId: response.data.comments[cc].commentId,
-                                                dislike: false 
-                                            })
-                                            .then(function (resp) {
-                                                response.data.comments[cc].disliked = false;
-                                                alert(resp.data.result + resp.data.message);
-                                            })
-                                            .catch(err => console.error(err));
-        
-                                            toDislike[cc].style.color = "rgb(133,144,166)";  //踩按钮变灰
-        
-                                        }*/
     
                                     }
                                 }
@@ -787,7 +773,7 @@ function article_title(res) {
                                     
                                     var cc = this.parentNode.getAttribute("index");
 
-                                    console.log(cc,response.data.comments[cc].commentId,xx);
+                                    /*console.log(cc,response.data.comments[cc].commentId,xx);*/
 
                                     if ( response.data.comments[cc].disliked == true) {
                                         axios
@@ -798,7 +784,7 @@ function article_title(res) {
                                         })
                                         .then(function (resp) {
                                             comment_show[c].onclick();
-                                            alert(resp.data.result + resp.data.message);
+                                            /*alert(resp.data.result + resp.data.message);*/
                                         })
                                         .catch(err => console.error(err));
     
@@ -813,7 +799,7 @@ function article_title(res) {
                                         })
                                         .then(function (resp) {
                                             comment_show[c].onclick();
-                                            alert(resp.data.result + resp.data.message);
+                                            /*alert(resp.data.result + resp.data.message);*/
                                         })
                                         .catch(err => console.error(err));
     
@@ -824,7 +810,7 @@ function article_title(res) {
                                 delete_Comment[xx].onclick = function(){
                                     var cc = this.getAttribute("index");
 
-                                    console.log(uID,response.data.comments[cc].commentId);
+                                    /*console.log(uID,response.data.comments[cc].commentId);*/
                                     
                                     axios
                                     .delete("http://47.97.204.234:3000/article/deleteComment", {
@@ -871,7 +857,9 @@ function article_title(res) {
                                 reply[xx].onclick = function(){
                                     var cc = this.getAttribute("index");
 
-                                    if ( text = "" ) {
+                                    var texts = this.previousElementSibling.children[0].value;
+
+                                    if ( texts == "" ) {
                                         alert('宁没有输入内容');
                                     } else {
                                         axios
@@ -882,7 +870,7 @@ function article_title(res) {
                                         })
                                         .then(function(resp) {
                                             comment_show[c].onclick();
-                                            alert(resp.data.result + resp.data.message +":"+ input_replybox[cc].children[0].value);
+                                            /*alert(resp.data.result + resp.data.message +":"+ input_replybox[cc].children[0].value);*/
                                             input_replybox[cc].children[0].value = "";
                                         })
                                         .catch(err => console.error(err));
@@ -896,10 +884,6 @@ function article_title(res) {
                     })
                     .catch(err => console.error(err));
                 }
-
-                
-
-
             
             }
 
@@ -918,10 +902,9 @@ function article_title(res) {
             /*发布评论*/
             goComment[x].onclick = function(){
                 var c = this.getAttribute("index");
-                console.log(1);
                 var text = this.previousElementSibling.children[0].value;
                 this.previousElementSibling.children[0].value = "";
-                console.log(text);
+                /*console.log(text);*/
                 
                 if (text == "") {
                     alert('宁没有输入内容');
@@ -934,7 +917,7 @@ function article_title(res) {
                       content: text
                     })
                     .then(function (response) {
-                        alert(response.data.result + response.data.message+ response.data.commentId);
+                        /*alert(response.data.result + response.data.message+ response.data.commentId);*/
                         comment_show[c].onclick();
                     })
                     .catch(err => console.error(err));
@@ -949,7 +932,7 @@ function article_title(res) {
         /*顶与踩*/
         function likedStatus (liked){
             if (liked == true){
-                console.log (liked);
+                /*console.log (liked);*/
                 return 'style = "background-color:#0084ff; color:#fff;" ';
             } else {
                 return "";
@@ -961,7 +944,7 @@ function article_title(res) {
         function dislikedStatus (disliked){
 
             if (disliked == true){
-                console.log (disliked);
+                /*console.log (disliked);*/
                 return 'style = "background-color:#0084ff; color:#fff;" ';
             } else {
                 return "";
@@ -970,7 +953,7 @@ function article_title(res) {
 
         function Statusliked (liked){
             if (liked == true){
-                console.log (liked);
+                /*console.log (liked);*/
                 return 'style = "color:#0084ff;"';
             } else {
                 return "";
@@ -982,7 +965,7 @@ function article_title(res) {
         function Statusdisliked (disliked){
 
             if (disliked == true){
-                console.log (disliked);
+                /*console.log (disliked);*/
                 return 'style = "color:#0084ff;"';
             } else {
                 return "";
@@ -996,152 +979,234 @@ function article_title(res) {
 
 }
 
+/*个人资料返回主页*/
 
-/*评论*/
-/*
-<div class="comment" >
-    <div class="comment_box">
-        <div class="comment_text">
-            <div class="commentNum" ><h2>现有XX条评论</h2></div>
-        </div>
+document.querySelector(".goback_homepage").addEventListener("click", homepageGo);  //监听
+document.getElementById("goto_personal_Homepage").addEventListener("click", toPersonalHomepage);  //监听
 
-        <div class="comment_content">
-            
-            <ul class="comment_item">
+/*去个人主页*/
+function toPersonalHomepage() {
+    land.style.display = "none";
+    homepage.style.display = "none";
+    personal_Homepage.style.display = "block";
+    document.querySelector('.showblueOne').style.display = "none";
+    getInfo();
+}
 
-                <li class=" first_commentator">
-                    <div class="commentator">
-                        <span>头</span>
-                        <span>人名</span>
-                        <span class="release_time">时间</span>
-                    </div>
 
-                    <div class="commentator_content">
-                        <div class="commentator_top">
-                            评论内容
-                        </div>
+/*显示输入框*/
 
-                        <div class="commentator_bottom">
-                            <button type="button" >
-                                <span class="idco">&#xe6e8</span>
-                                赞
-                            </button>
+var input_content = document.querySelectorAll('.input_content');
+var group_two = document.querySelectorAll('.group_two');
 
-                            <div class="commentator_function">
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    回复
-                                </button>
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    踩
-                                </button>
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    举报
-                                </button>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                </li>
-
-                <li class="commentator_item ">
-                    <div class="division"></div>
-                    <div class="commentator">
-                        <span>头</span>
-                        <span>人名</span>
-                        <span class="release_time">时间</span>
-                    </div>
-
-                    <div class="commentator_content">
-                        <div class="commentator_top">
-                            评论内容
-                        </div>
-
-                        <div class="commentator_bottom">
-                            <button type="button" >
-                                <span class="idco">&#xe6e8</span>
-                                赞
-                            </button>
-
-                            <div class="commentator_function">
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    回复
-                                </button>
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    踩
-                                </button>
-                                <button type="button" >
-                                    <span class="idco">&#xe6e8</span>
-                                    举报
-                                </button>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                </li>
-                
-            </ul>
-        </div>
-
-        <div class="comment_input">
-            <div class="comment_input_box">
-                <div class="input_box">
-                    <textarea placeholder="写下你的评论.."></textarea>
-                    <span class="idco">0</span>
-                </div>
-                
-                <button type="button" id="goComment">发布</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<li class="commentator_item ">
-            <div class="division"></div>
-            <div class="commentator">
-                <span>头</span>
-                <span>人名</span>
-                <span class="release_time">时间</span>
-            </div>
+for(var i = 0 ; i < input_content.length ; i++) {
     
-            <div class="commentator_content">
-                <div class="commentator_top">
-                    评论内容
-                </div>
-    
-                <div class="commentator_bottom">
-                    <button type="button" >
-                        <span class="idco">&#xe6e8</span>
-                        赞
-                    </button>
-    
-                    <div class="commentator_function">
-                        <button type="button" >
-                            <span class="idco">&#xe6e8</span>
-                            回复
-                        </button>
-                        <button type="button" >
-                            <span class="idco">&#xe6e8</span>
-                            踩
-                        </button>
-                        <button type="button" >
-                            <span class="idco">&#xe6e8</span>
-                            举报
-                        </button>
-                    </div>
-                    
-                </div>
-            </div>
-            
-        </li>
+    input_content[i].onclick = function() {
+        this.parentNode.style.display = "none";
+        this.parentNode.nextElementSibling.style.display = "block"
+    }
 
+    group_two[i].onclick = function() {
+        this.parentNode.parentNode.style.display = "none";
+        this.parentNode.parentNode.previousElementSibling.style.display = "block"
+    }
+}
 
+/*获取个人信息*/
+function getInfo() {
+    axios
+    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID ,{
+
+    })
+    .then(res => addPersonal(res))
+    .catch(err => console.error(err));
+}
+
+/*添加个人信息*/
+/*var userAvatarImg = document.querySelector('.userAvatarImg');*/
+
+function addPersonal(res) {
+    uNickname = res.data.info.nickname;
+    uAvatar = res.data.info.avatar;
+    document.querySelector('.people_Avatar').innerHTML = `<img src="${uAvatar}" ></img>`;
+
+    /*console.log(uAvatar);*/
+
+    document.querySelector('.userAvatarImg').src = uAvatar;
+
+    document.querySelector('.userNameTitle').innerText = uNickname;
+
+    var field_text = document.querySelectorAll('.field_text');
+
+    field_text[0].innerText = res.data.info.gender;
+    field_text[1].innerText = res.data.info.introduction;
+    field_text[2].innerText = res.data.info.trade;
+    field_text[3].innerText = res.data.info.resume;
+
+    /*修改*/
+    var group_one = document.querySelectorAll('.group_one');
+
+    /*修改名字*/
+    group_one[0].onclick = function() {
+        var textname =  this.parentNode.previousElementSibling.value;
+
+        if (textname == "") {
+            alert('宁没有输入内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/user/alterInfo",{
+                userId : uID,
+                direction : 0 ,
+                content : textname
+            })
+            .then(function(resp){
+                alert(resp.data.result + resp.data.message);
+                toPersonalHomepage();
+                group_two[0].onclick();
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+    /*修改性别*/
+    group_one[1].onclick = function() {
+        var gender = document.getElementsByName("gender");
+        var textgender = "";
+        if (gender[0].checked == true) {
+            textgender = gender[0].value;
+        } else if (gender[1].checked == true) {
+            textgender = gender[1].value;
+        } 
         
-*/
+
+        if (textgender == "") {
+            alert('宁没有选择内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/user/alterInfo",{
+                userId : uID,
+                direction : 1 ,
+                content : textgender
+            })
+            .then(function(resp){
+                alert(resp.data.result + resp.data.message);
+                toPersonalHomepage();
+                group_two[1].onclick();
+
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+    /*修改一句话介绍*/
+    group_one[2].onclick = function() {
+
+        var textIntroduction =  this.parentNode.previousElementSibling.value;
+
+        if (textIntroduction == "") {
+            alert('宁没有输入内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/user/alterInfo",{
+                userId : uID,
+                direction : 2 ,
+                content : textIntroduction
+            })
+            .then(function(resp){
+                alert(resp.data.result + resp.data.message);
+                toPersonalHomepage();
+                group_two[2].onclick();
+
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+    /*修改职业*/
+    group_one[3].onclick = function() {
+
+        var optionIndex = this.parentNode.previousElementSibling.selectedIndex;
+        var textindustry =  this.parentNode.previousElementSibling[optionIndex].value;
+
+        if (textindustry == "") {
+            alert('宁没有选择内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/user/alterInfo",{
+                userId : uID,
+                direction : 3 ,
+                content : textindustry
+            })
+            .then(function(resp){
+                alert(resp.data.result + resp.data.message);
+                toPersonalHomepage();
+                group_two[3].onclick();
+
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+
+    /*修改个人简介*/
+    group_one[4].onclick = function() {
+
+        var textIntroduction =  this.parentNode.previousElementSibling.value;
+
+        if (textIntroduction == "") {
+            alert('宁没有输入内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/user/alterInfo",{
+                userId : uID,
+                direction : 4 ,
+                content : textIntroduction
+            })
+            .then(function(resp){
+                alert(resp.data.result + resp.data.message);
+                toPersonalHomepage();
+                group_two[4].onclick();
+
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+
+    
+}
+
+/*上传头像*/
+
+var btn = document.querySelector("#btn");
+btn.onclick=function(){
+    this.style.display = "none";
+    this.previousElementSibling.innerHTML = "";
+    var formdata=new FormData(document.getElementById("advForm"));
+    /*console.log(formdata);*/
+    /*console.log(formdata.get('Avatar'));*/
+    axios({
+      method:'post',
+      url:'http://47.97.204.234:3000/user/alterAvatar',
+      data:formdata,
+      cache: false,         // 不缓存 
+      contentType: false,  // 不设置内容类型  jQuery不要去设置Content-Type请求头
+      processData: false,  // jQuery不要去处理发送的数据
+      withCredentials:true,
+    })
+    .then(function(resp){
+    /*console.log(resp);*/
+    alert(resp.data.result + resp.data.message);
+    toPersonalHomepage();
+    })
+    .catch(err => console.error(err));
+
+}
+
+var personal_avatarInput = document.querySelector('.personal_avatarInput');
+
+personal_avatarInput.onchange = function() {
+    this.nextElementSibling.innerHTML = this.value;
+    this.nextElementSibling.nextElementSibling.style.display = "block";
+}
 

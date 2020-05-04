@@ -579,6 +579,7 @@ ul {
 
 /*顶上导航条*/
 .header {
+    display: none;
     position: fixed;
     z-index: 100;
     top: 0;
@@ -610,8 +611,15 @@ ul {
     animation-timing-function: ease;
     animation-delay: 0s;
     animation-fill-mode:forwards;
+}
+
+#personal_header_roll {
+    position: absolute;
+    top: 0px;
+    margin: 0 auto;
 
 }
+
 
 .head li a:hover {
     color: rgb(23,81,153);
@@ -743,7 +751,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 268px;
+    width: 248px;
     height: 31px;
 }
 
@@ -752,6 +760,13 @@ ul {
 .hearder_user .people {
     margin-left: 40px;
     position: relative;
+}
+
+.people_Avatar img {
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    border: 1px solid #646464;
 }
 
 .hearder_user button {
@@ -1575,6 +1590,315 @@ ul {
 .homepage_main footer a:hover {
     color: rgb(23,81,153);
 }
+
+
+/*-------------------------个人信息页面-----------------------------*/
+
+body {
+    background-color: #f0f2f7;
+}
+
+.personal_Homepage {
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+
+    display: none;
+}
+
+.personal_content {
+    width: 1000px;
+    margin: 0 16px;
+    margin: 62px auto;
+    font-size: 15px;
+    color: #1a1a1a;
+    box-shadow: 0 1px 3px  rgba(26,26,26,0.1) ;
+}
+
+/*---------------图-*/
+.personal_backgroundImg {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background-color: #f6f6f6;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.personal_backgroundImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*-------个人资料----*/
+
+.personal_main {
+    position: relative;
+
+    width: 1000px;
+
+}
+
+/*头像*/
+.personal_userAvatar {
+    position: absolute;
+    top: -25px;
+    left: 20px;
+    z-index: 5;
+    cursor: pointer;
+    height: 164px;
+    width: 164px;
+}
+
+.personal__avatarbox {
+    display: inline-block;
+    overflow: hidden;
+
+    vertical-align: top;
+    background-color: #fff;
+    border: 4px solid #fff;
+    border-radius: 8px;
+}
+
+.personal__avatarbox img {
+    width: 160px;
+    height: 160px;
+    vertical-align: top;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.personal_avatarAdd {
+    
+    border: 4px solid #fff;
+    
+}
+
+.personal_avatarAdd p {
+    width: 160px;
+    overflow: auto;
+}
+
+.personal_avatarAdd input[type="file"] {
+    opacity: 0;
+    background-color: antiquewhite;
+    height: 160px;
+    width: 160px;
+    position: absolute;
+    top: 5px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+
+.personal_avatarAdd input[type="button"] {
+    border: 1px solid #0084ff;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: #0084ff;
+    color: #fff;
+    font-size: 16px;
+    display: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    height: 40px;
+}
+
+.personal_avatarTip {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 8;
+}
+
+.personal_avatarTip_button {
+    background-color:rgba(58,67,71,0.5) ;
+    border: 4px solid #fff;
+    border-radius: 8px;
+    display: flex;
+
+    height: 160px;
+    width: 160px;
+    color: white;
+
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+/*个人资料内容*/
+
+.personal_userContent {
+    background-color: #fff;
+    padding-top: 16px;
+    padding-left: 35px;
+    border-left: 164px solid transparent;
+    padding-right: 20px;
+}
+
+/*头*/
+.personal_header {
+    position: relative;
+    margin-bottom: 16px;
+    display: flex;
+
+    align-items: center;
+}
+
+
+.personal_nameModify button,
+.goback_homepage button {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    color: #0084ff;
+    font-size: 16px;
+}
+
+
+.goback_homepage button{
+    position: absolute;
+    right: 0;
+    color: #999;
+    top: 10px;
+}
+
+/*主要内容*/
+
+.primary_Coverage {
+    padding-bottom: 100px;
+    margin-top: 10px;
+}
+
+.primary_Coverage  .field{
+    padding: 30px 0;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.field h3 {
+    position: absolute;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 36px;
+
+}
+
+.field_content {
+    padding: 0 64px 0 140px;
+    line-height: 45px;
+}
+
+.personal_header .field_content {
+    padding: 0 64px;
+}
+
+.input_content {
+    margin-left: 10px;
+    border: none;
+    background-color: transparent;
+    color: #0084ff;
+    font-size: 16px;
+}
+
+.personal_nameModify .idco {
+    font-size: 16px;
+}
+
+.input_content .idco {
+    font-size: 16px;
+}
+
+.personal_avatarTip_button .idco {
+    font-size: 50px;
+}
+
+
+/*输入内容*/
+
+/*按钮组*/
+.button_group {
+    margin-top: 24px;
+    vertical-align: top;
+}
+
+.button_group  button{
+    display: inline-block;
+    padding:  0 16px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.group_one {
+    background-color: #0084ff;
+    color: #fff;
+    border: 1px solid #0084ff;
+}
+
+.group_two {
+    margin-left: 15px;
+    background-color: #fff;
+    border: 1px solid #999;
+}
+
+/*输入内容*/
+.field_content_two {
+    display: none;
+}
+/*男女*/
+.input_girl {
+    margin-left: 30px;
+}
+
+/*一句话介绍*/
+.self-introduction {
+    line-height: 24px;
+    height: 24px;
+    width: 540px;
+    padding: 4px 10px;
+    border: 1px solid #ebebeb;
+    color: #999;
+}
+
+/*所在行业*/
+.industry {
+    border: 1px solid #999;
+    height: 24px;
+    line-height: 24px;
+}
+
+/*个人简介*/
+.personal_profile {
+    width: 540px;
+    padding: 4px 10px;
+    border: 1px solid #ebebeb;
+    line-height: 24px;
+    font-size: 16px;
+
+    outline: none;
+    outline: 0;
+    overflow:auto;
+    resize:none  /*去右下角*/
+}
+
+/*修改用户名*/
+.modify_username {
+    line-height: 24px;
+    height: 24px;
+    width: 340px;
+    padding: 4px 10px;
+    border: 1px solid #ebebeb;
+    color: #999;
+}
+
 
 /*定义淡出动画*/
 @keyframes fadein {
