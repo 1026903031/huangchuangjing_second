@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="land.css" />
     </head>
 
-    <body>
+    <body class="bodyyy">
         <!--登陆界面-->
         <div class="land">
 
@@ -229,7 +229,7 @@
 
                         <div class="hearder_user">
                             <div class="bell">
-                                <button type="button" class="idco" id="bell" >&#xe734</button>
+                                <button type="button" class="idco show_friends" id="bell" >&#xe734</button>
 
                                 <div class="user_show bell_show">
                                     <div class="angle"></div>
@@ -249,9 +249,9 @@
                                         </div>
 
                                         <div class="friends_content">
-                                            <div class="friends_box">
-                                                <div class="idco">&#xe734</div>
-                                                <div class="friends_text">还没有消息</div>
+                                            <div class="friends_box friends_list">
+                                                <!--div class="idco">&#xe734</!--div>
+                                                <div-- class="friends_text">还没有消息</div-->
                                             </div>
 
                                         </div>
@@ -267,8 +267,9 @@
                             </div>
 
                             <div class="information">
-                                <button type="button" class="idco" id="information" >&#xe608</button>
+                                <button type="button" class="idco show_news" id="information" >&#xe608</button>
 
+                                <div class="dot"></div>
                                 <div class="user_show information_show">
                                     <div class="angle"></div>
                                     <div class="user_content">
@@ -279,9 +280,14 @@
                                         </div>
 
                                         <div class="friends_content">
-                                            <div class="friends_box">
-                                                <div class="idco">&#xe734</div>
-                                                <div class="friends_text">还没有新信息</div>
+
+                                            <div class="friends_box news_list">
+
+                                                <div class="tohide">
+                                                    <div class="idco">&#xe734</div>
+                                                    <div class="friends_text">还没有新信息</div>
+                                                </div>
+                                                
                                             </div>
 
                                         </div>
@@ -964,6 +970,33 @@
 
             </div>
             
+        </div>
+
+        <!--聊天框-->
+        <div class="chat_box">
+            <div class="chat_background"></div>
+            <div class="chat">
+                <header class="chat_header">
+                    <div class="chat_name">名称</div>
+                </header>
+                
+                <div class="chat_content">
+
+                </div>
+
+                <div class="chat_inputBox">
+                    <div class="chat_toolbar">
+                        <div class="idco">&#xe78d</div>
+                    </div>
+
+                    <textarea class="chat_input"></textarea>
+
+                    <div class="chat_input_floor">
+                        <button type="button" class="chat_input_send">发送</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
         
 

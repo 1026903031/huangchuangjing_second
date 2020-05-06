@@ -78,59 +78,7 @@ if (hour >= 19 && hour < 24){
     console.log("打打打打代码");
 }
 
-/*主页导航条的消失与隐藏*/
-var bell = document.getElementById("bell");
-var bell_show = document.querySelector(".bell_show");
-var information = document.getElementById("information");
-var information_show = document.querySelector(".information_show");
-var people = document.getElementById("people");
-var people_show = document.querySelector(".people_content");
 
-people.onclick = function() {
-    if (people_show.style.display == "none") {
-        people_show.style.display = "block";
-        information_show.style.display = "none";
-        bell_show.style.display = "none";
-    } else {
-        people_show.style.display = "none";
-    }
-}
-
-bell.onclick = function() {
-    if (bell_show.style.display == "none") {
-        bell_show.style.display = "block";
-        information_show.style.display = "none";
-        people_show.style.display = "none";
-    } else {
-        bell_show.style.display = "none";
-    }
-}
-
-information.onclick = function() {
-    if (information_show.style.display == "none") {
-        information_show.style.display = "block";
-        bell_show.style.display = "none";
-        people_show.style.display = "none";
-    } else {
-        information_show.style.display = "none";
-    }
-}
-
-people_show.onclick = function() {
-    people_show.style.display = "none";
-}
-
-var homepage_main = document.querySelector(".homepage_main");
-
-function disappear() {
-    bell_show.style.display = "none";
-    people_show.style.display = "none";
-    information_show.style.display = "none";
-}
-
-homepage_main.onclick = function() {
-    disappear();
-}
 
 /*返回滑动条数值*/
 function scroll() {

@@ -37,16 +37,22 @@ var header  = document.querySelector(".header");    //导航条
 
 var uName , uPWord , uID,uNickname,uAvatar;
 
+
 /*登录跳转*/
 document.getElementById("goto_homepage").addEventListener("click", toLogin);  //监听
 
 function homepageGo() {     //转页面
+
     land.style.display = "none";
     homepage.style.display = "block";
     header.style.display = "block";
     personal_Homepage.style.display = "none";
     document.querySelector('.showblueOne').style.display = "block";  
     getArticle();
+
+    timer = setInterval(function() {
+        getfriends();
+    } ,5000);
 }
 
 function toLogin() {    //登录，向服务器请求
@@ -103,11 +109,14 @@ document.getElementById("goto_land").addEventListener("click", toLogout);  //监
 
 
 function landGo() {     //转页面
+    /*console.log('tuichuchenggong')*/
     alert("退出成功！");
     land.style.display = "block";
     homepage.style.display = "none";
     header.style.display = "none";
     personal_Homepage.style.display = "none";
+
+    clearInterval(timer);
 }
 
 function toLogout() {    //向服务器请求 退出登录
@@ -467,7 +476,7 @@ function article_title(res) {
                             
                                     <div class="commentator_content">
                                         <div class="commentator_top">
-                                            ${response.data.comments[a].content}
+                                            <!--${response.data.comments[a].content}-->
                                         </div>
                             
                                         <div class="commentator_bottom" index="${a}">
@@ -526,6 +535,10 @@ function article_title(res) {
                             </ul>
                             `;
 
+                            /*干掉攻击*/
+                            var commentator_top = document.querySelectorAll('.commentator_top');
+                            commentator_top[a].innerText = response.data.comments[a].content;
+
                             /*显示回复*/
                             add_Replies(response.data.comments[a].replied, a);
                             function add_Replies(replied, a ){
@@ -552,8 +565,8 @@ function article_title(res) {
                                                 </div>
                             
                                                 <div class="commentator_content">
-                                                    <div class="commentator_top">
-                                                        ${resp.data.replies[aa].content}
+                                                    <div class="commentator_toptop" index="${bbbb}">
+                                                        "${resp.data.replies[aa].content}"
                                                     </div>
                             
                                                     <div class="commentator_bottom" index="${aa}">
@@ -586,8 +599,11 @@ function article_title(res) {
                                             </li>
                                             `;
 
-                                            bbbb++;
                                             
+                                            /*干掉攻击*/
+                                            /*var commentator_toptop = document.querySelectorAll('.commentator_toptop');
+                                            commentator_toptop[bbbb].innerText = resp.data.replies[aa].content;*/
+                                            bbbb++;
 
                                             var toLike_reply = document.querySelectorAll('.toLike_reply');
                                             var toDislike_reply = document.querySelectorAll('.toDislike_reply');
@@ -974,9 +990,6 @@ function article_title(res) {
         
     }
 
-    
-
-
 }
 
 /*个人资料返回主页*/
@@ -991,6 +1004,9 @@ function toPersonalHomepage() {
     personal_Homepage.style.display = "block";
     document.querySelector('.showblueOne').style.display = "none";
     getInfo();
+    timer = setInterval(function() {
+        getfriends();
+    } ,5000);
 }
 
 
@@ -1179,7 +1195,7 @@ function addPersonal(res) {
 /*上传头像*/
 
 var btn = document.querySelector("#btn");
-btn.onclick=function(){
+btn.onclick = function(){
     this.style.display = "none";
     this.previousElementSibling.innerHTML = "";
     var formdata=new FormData(document.getElementById("advForm"));
@@ -1206,7 +1222,315 @@ btn.onclick=function(){
 var personal_avatarInput = document.querySelector('.personal_avatarInput');
 
 personal_avatarInput.onchange = function() {
+    console.log(1531);
     this.nextElementSibling.innerHTML = this.value;
     this.nextElementSibling.nextElementSibling.style.display = "block";
 }
 
+/*-----好友列表-----------*/
+
+var show_friends = document.querySelector('.show_friends');     //获取好友按钮
+var friends_list = document.querySelector('.friends_list');     //获取列表盒
+var show_news = document.querySelector('.show_news');     //获取信息按钮
+var news_list = document.querySelector('.news_list');     //获取列表盒
+
+/*点击显示好友列表*/
+show_friends.onclick = function () {
+    if (bell_show.style.display == "none") {
+        bell_show.style.display = "block";
+        information_show.style.display = "none";
+        people_show.style.display = "none";
+        /*getfriends();*/
+    } else {
+        bell_show.style.display = "none";
+    }
+}
+
+/*点击显示新信息*/
+show_news.onclick = function () {
+    if (information_show.style.display == "none") {
+        information_show.style.display = "block";
+        bell_show.style.display = "none";
+        people_show.style.display = "none";
+        /*getfriends();*/
+    } else {
+        information_show.style.display = "none";
+    }
+}
+
+function friend_Message() {
+    return axios.get("http://47.97.204.234:3000/user/friendList?userId=" + uID);
+}
+  
+function friend_News() {
+    return axios.get("http://47.97.204.234:3000/chat/getMessage?userId=" + uID);
+}
+
+/*请求获取好友信息*/
+function getfriends()  { 
+
+    axios.all([friend_Message(), friend_News()])
+    .then(axios.spread(function (res_M, res_N) {
+
+        friends_list.innerHTML = "";
+        for (var i = 0 ; i < res_M.data.friends.length ; i++) {
+            friends_list.innerHTML +=`
+            <div class="friends_item" onclick="tochat(
+                '${res_M.data.friends[i].userId}' ,
+                '${res_M.data.friends[i].nickname}' ,
+                '${res_M.data.friends[i].avatar}' ,
+                '${null}' ,
+                '${null}'
+                )">
+
+                <div class="friends_Avatar">
+                    <img src="${res_M.data.friends[i].avatar}">
+                </div>
+
+                <div class="friends_news">
+                    <span class="friends_name">${res_M.data.friends[i].nickname}</span>
+                    <span class="friends_introduction" index="${i}">个人介绍：${addIntroduction(res_M.data.friends[i].introduction)}</span>
+                </div>
+            </div>
+            `
+
+            /**/
+
+        }
+
+        if (res_N.data.message == "获取成功") {
+
+            document.querySelector('.dot').style.display = "block";
+            document.querySelector('.tohide').style.display = "none";
+
+            for (var ii = 0 ; ii < res_N.data.newMessages.length ; ii++) {
+                for (var iii = 0 ; iii < res_M.data.friends.length ; iii++) {
+
+                    if (res_N.data.newMessages[ii].senderId == res_M.data.friends[iii].userId) {
+                        console.log(res_N.data.newMessages);
+                        news_list.innerHTML += `
+                        <div class="friends_item friends_newsitem" onclick="tochat(
+                            '${res_M.data.friends[iii].userId}',
+                            '${res_M.data.friends[iii].nickname}',
+                            '${res_M.data.friends[iii].avatar}',
+                            '${res_N.data.newMessages[ii].content}',
+                            '${res_N.data.newMessages[ii].time}'
+                            )" index="${res_M.data.friends[iii].userId}" >
+
+                            <div class="friends_Avatar">
+                                <img src="${res_M.data.friends[iii].avatar}">
+                            </div>
+
+                            <div class="friends_news">
+                                <span class="friends_name">${res_M.data.friends[iii].nickname}</span>
+                                <span class="friends_introduction" index="${ii}" >${res_N.data.newMessages[ii].content}</span>
+                            </div>
+                        </div>
+                    `
+                    }
+                }
+            }
+        } 
+
+        if (news_list.children.length == 1 ) {
+            document.querySelector('.dot').style.display = "none";
+            document.querySelector('.tohide').style.display = "block";
+        }
+
+    }))
+    .catch(err => console.error(err));
+}
+
+/*增加介绍*/
+function addIntroduction(inctro) {
+    if (inctro == "") {
+        return "此人很懒，无介绍";
+    } else {
+        return inctro;
+    }
+}
+
+
+/*主页导航条的消失与隐藏*/
+var bell_show = document.querySelector(".bell_show");
+var information_show = document.querySelector(".information_show");
+var people = document.getElementById("people");
+var people_show = document.querySelector(".people_content");
+
+people.onclick = function() {
+    if (people_show.style.display == "none") {
+        people_show.style.display = "block";
+        information_show.style.display = "none";
+        bell_show.style.display = "none";
+    } else {
+        people_show.style.display = "none";
+    }
+}
+
+people_show.onclick = function() {
+    people_show.style.display = "none";
+}
+
+var homepage_main = document.querySelector(".homepage_main");
+
+function disappear() {
+    bell_show.style.display = "none";
+    people_show.style.display = "none";
+    information_show.style.display = "none";
+}
+
+homepage_main.onclick = function() {
+    disappear();
+}
+
+
+/*------------显示聊天窗口----------------*/
+var chat_box = document.querySelector(".chat_box");
+var chat_background = document.querySelector(".chat_background");
+var chat_content = document.querySelector(".chat_content");
+var bodyyy = document.querySelector('.bodyyy');
+
+function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
+
+    disappear();    //框框都消失
+    bodyyy.style.overflow = "hidden";   //隐藏主滑动栏
+    clearInterval(timer);   //停止慢请求
+
+    chat_box.style.display = "flex" ;   //显示聊天框
+
+    chat_background.onclick = function() {  //点击背景返回页面
+
+        chat_box.style.display = "none" ;
+        chat_content.innerHTML = "";    //清空聊天框内容
+        bodyyy.style.overflow = "auto" ;
+
+        timer = setInterval(function() {    //继续慢请求
+            getfriends();
+        } ,5000);
+
+        clearInterval(hight_timer);     //停止快请求
+    }
+
+    var friends_newsitem = document.querySelectorAll(".friends_newsitem");
+    for (var i = 0 ; i < friends_newsitem.length ; i++){
+        var friendIndex =  friends_newsitem[i].getAttribute('index');
+        if(friendIndex == friendsId) {
+            /*点击删除*/
+            news_list.removeChild(friends_newsitem[i]);
+        }
+    }
+
+    
+
+    var chat_name = document.querySelector(".chat_name");   //更改聊天好友名字
+    chat_name.innerText = friendsName;
+    
+    if(friends_content != "null") {     //如果有聊天内容则显示内容（对于新发起的聊天框没用）
+        chat_content.innerHTML = `
+        <div class="chat_item">
+            <span class="chat_item_time">${time}</span>
+
+            <div class="chat_item_box">
+                <div class="chat_Avatar">
+                    <img src="${friendAvatar}">
+                </div>
+
+                <div class="char_item_contentbox">
+                    <div class="chat_item_angle"></div>
+                    <div class="chat_item_content">
+                        <p>${friends_content}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        `;
+
+    }
+
+    /*高频获取信息*/
+    hight_timer = setInterval(function getFriendsMessage() {
+
+        axios
+        .get("http://47.97.204.234:3000/chat/getMessage?userId=" + uID, {
+        })
+        .then( function(resp_FM) {
+            if (resp_FM.data.message == "获取成功") {
+
+                for (var i = 0 ; i < resp_FM.data.newMessages.length ; i++) {
+
+                    if(resp_FM.data.newMessages[i].senderId == friendsId) {     //获取当前好友发来的信息
+                        var myDate = new Date();
+
+                        chat_content.innerHTML += `
+                        <div class="chat_item">
+
+                            <span class="chat_item_time">${myDate.toLocaleString()}</span>
+
+                            <div class="chat_item_box">
+                                <div class="chat_Avatar">
+                                    <img src="${friendAvatar}">
+                                </div>
+
+                                <div class="char_item_contentbox">
+                                    <div class="chat_item_angle"></div>
+                                    <div class="chat_item_content">
+                                        <p>${resp_FM.data.newMessages[i].content}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    }
+                }
+                
+            }
+
+        })
+        .catch(err => console.error(err));
+
+    } ,1000);
+
+    /*发送信息*/
+    var chat_input = document.querySelector('.chat_input');
+    var chat_input_send = document.querySelector('.chat_input_send');
+
+    chat_input_send.onclick = function() {
+        var send_text = chat_input.value;
+        if(send_text == "") {
+            alert('宁没有输入内容');
+        } else {
+            axios
+            .post("http://47.97.204.234:3000/chat/sendMessage", {
+                userId: uID,
+                friendId: friendsId,
+                content: send_text
+            })
+            .then(function(resp) {
+                var myDate = new Date();
+
+                chat_content.innerHTML += `
+                <div class="chat_userItem">
+
+                    <span class="chat_userItem_time">${myDate.toLocaleString()}</span>
+                    
+                    <div class="chat_userItem_box">
+                        <div class="chat_userAvatar">
+                            <img src="${uAvatar}">
+                        </div>
+
+                        <div class="chat_userItem_contentbox">
+                            <div class="chat_userItem_angle"></div>
+                            <div class="chat_userItem_content">
+                                <p>${send_text}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+                chat_input.value = "";
+            })
+            .catch(err => console.error(err));
+        }
+    }
+}
