@@ -140,10 +140,13 @@ window.onscroll = function () {
     } else {
         tofixedtwo.style.display = "block";
         tofixedone.style.right = "" ;
+
     }
 }
 
 goTop.onclick = function () {                                           //当所设置gotop元素被点击时，触发函数
+    
+    
     clearInterval(goTop.timer);                                         //停止计时器循环
     goTop.timer = setInterval(function () {                             //设置定时器循环期间的操作（每0.03秒来一次）
         var speed = (0 - scroll().top) / 10;                            //设置一个speed的数，以做到每0.03秒上升高度不同，以起到先快再慢的效果
@@ -153,4 +156,64 @@ goTop.onclick = function () {                                           //当所
             clearInterval(goTop.timer);                                 //当到顶部的时候停止定时器循环
         }
     }, 30)
+
+    /*var isTop = true;//先声明
+    //滚动条滚动时触发             
+    window.onscroll = function(){               
+    if(!isTop){
+        clearInterval(goTop.timer);
+    }
+    isTop = false;
+    };
+    isTop = true;//添加在obtn.onclick事件的timer中*/
+
 }
+
+/*判断滚轮事件*/
+var scrollFunc = function (e) {  
+
+    e = e || window.event;  
+
+    if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件               
+
+        if (e.wheelDelta > 0) { //当滑轮向上滚动时  
+
+           clearInterval(goTop.timer); 
+
+        }  
+
+        if (e.wheelDelta < 0) { //当滑轮向下滚动时  
+
+
+             clearInterval(goTop.timer); 
+
+        }  
+
+    } else if (e.detail) {  //Firefox滑轮事件  
+
+        if (e.detail> 0) { //当滑轮向下滚动时  
+
+           clearInterval(goTop.timer); 
+
+        }  
+
+        if (e.detail< 0) { //当滑轮向上滚动时  
+
+            clearInterval(goTop.timer);   
+
+        }  
+
+    }  
+
+} 
+
+/*IE、Opera注册事件*/
+if(document.attachEvent){
+    document.attachEvent('onmousewheel',scrollFunc);
+}
+//Firefox使用addEventListener添加滚轮事件  
+if (document.addEventListener) {//firefox  
+    document.addEventListener('DOMMouseScroll', scrollFunc, false);  
+}  
+//Safari与Chrome属于同一类型
+window.onmousewheel = document.onmousewheel = scrollFunc; 
