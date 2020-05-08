@@ -1983,6 +1983,12 @@ body {
     justify-content: center;
     align-items: center;
     display: none;
+
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
 }
 
 .chat_background {

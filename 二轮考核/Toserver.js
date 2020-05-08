@@ -107,7 +107,6 @@ userPassword.onclick = function () {    //被点击框框红色消失
 document.getElementById("goto_land").addEventListener("click", toLogout);  //监听
 
 
-
 function landGo() {     //转页面
     /*console.log('tuichuchenggong')*/
     alert("退出成功！");
@@ -117,6 +116,8 @@ function landGo() {     //转页面
     personal_Homepage.style.display = "none";
 
     clearInterval(timer);
+
+    //history.go(0);      //刷新页面，以删除其他样式
 }
 
 function toLogout() {    //向服务器请求 退出登录
@@ -444,7 +445,6 @@ function article_title(res) {
                 }
 
                 comment[c].style.display = "block" ;    //显示评论区
-
                 this.nextElementSibling.style.display = "inline-block";      //隐藏按钮且显示收起按钮
                 this.style.display = "none";
 
@@ -476,11 +476,10 @@ function article_title(res) {
                             
                                     <div class="commentator_content">
                                         <div class="commentator_top">
-                                            <!--${response.data.comments[a].content}-->
                                         </div>
                             
                                         <div class="commentator_bottom" index="${a}">
-                                            <button type="button" class="toLike" index="${a}" ${Statusliked(response.data.comments[a].liked)} >
+                                            <button type="button" class="toLike"  index="${a}" ${Statusliked(response.data.comments[a].liked)} >
                                                 <span class="idco">&#xe700</span>
                                                 赞 ${response.data.comments[a].likeNum}
                                             </button>
@@ -1323,7 +1322,7 @@ function getfriends()  {
 
                             <div class="friends_news">
                                 <span class="friends_name">${res_M.data.friends[iii].nickname}</span>
-                                <span class="friends_introduction" index="${ii}" >${res_N.data.newMessages[ii].content}</span>
+                                <span class="friends_introduction friends_newsintroduction" index="${ii}" >${res_N.data.newMessages[ii].content}</span>
                             </div>
                         </div>
                     `
@@ -1411,40 +1410,66 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
         clearInterval(hight_timer);     //停止快请求
     }
 
-    var friends_newsitem = document.querySelectorAll(".friends_newsitem");
-    for (var i = 0 ; i < friends_newsitem.length ; i++){
-        var friendIndex =  friends_newsitem[i].getAttribute('index');
-        if(friendIndex == friendsId) {
-            /*点击删除*/
-            news_list.removeChild(friends_newsitem[i]);
-        }
-    }
-
-    
 
     var chat_name = document.querySelector(".chat_name");   //更改聊天好友名字
     chat_name.innerText = friendsName;
     
     if(friends_content != "null") {     //如果有聊天内容则显示内容（对于新发起的聊天框没用）
+
         chat_content.innerHTML = `
-        <div class="chat_item">
-            <span class="chat_item_time">${time}</span>
-
-            <div class="chat_item_box">
-                <div class="chat_Avatar">
-                    <img src="${friendAvatar}">
-                </div>
-
-                <div class="char_item_contentbox">
-                    <div class="chat_item_angle"></div>
-                    <div class="chat_item_content">
-                        <p>${friends_content}</p>
+            <div class="chat_item">
+                <span class="chat_item_time">${time}</span>
+                    <div class="chat_item_box">
+                        <div class="chat_Avatar">
+                            <img src="${friendAvatar}">
+                    </div>
+    
+                    <div class="char_item_contentbox">
+                        <div class="chat_item_angle"></div>
+                        <div class="chat_item_content">
+                            <p>${friends_content}</p>
+                        </div>
                     </div>
                 </div>
+    
             </div>
-
-        </div>
         `;
+
+        var friends_newsitem = document.querySelectorAll(".friends_newsitem");
+        var friends_newsintroduction = document.querySelectorAll(".friends_newsintroduction");
+
+        for (var i = 0 ; i < friends_newsitem.length ; i++){
+            var friendIndex =  friends_newsitem[i].getAttribute('index');
+            if(friendIndex == friendsId) {
+
+                if (friends_newsintroduction[i].innerText != friends_content) {
+                    chat_content.innerHTML += `
+                    <div class="chat_item">
+                        <div class="chat_item_box">
+                            <div class="chat_Avatar">
+                                <img src="${friendAvatar}">
+                            </div>
+    
+                            <div class="char_item_contentbox">
+                                <div class="chat_item_angle"></div>
+                                <div class="chat_item_content">
+                                    <p>${friends_newsitem[i].children[1].children[1].innerText}</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                    `;
+
+                }
+                
+                /*点击删除*/
+                news_list.removeChild(friends_newsitem[i]);
+                
+            }
+        }
+
+        
 
     }
 
@@ -1481,6 +1506,8 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
                             </div>
                         </div>
                         `;
+
+                        chat_content.scrollTop = chat_content.scrollHeight;
                     }
                 }
                 
@@ -1528,7 +1555,10 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
                     </div>
                 </div>
                 `
+
                 chat_input.value = "";
+
+                chat_content.scrollTop = chat_content.scrollHeight;
             })
             .catch(err => console.error(err));
         }
