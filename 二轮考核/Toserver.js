@@ -34,8 +34,30 @@ var land = document.querySelector(".land");     //登录页面
 var homepage = document.querySelector(".homepage");     //主页
 var personal_Homepage = document.querySelector(".personal_Homepage");   //个人主页
 var header  = document.querySelector(".header");    //导航条
+var remember = document.querySelector('.remember');
 
 var uName , uPWord , uID,uNickname,uAvatar;
+
+/*记住用户名*/
+
+if(localStorage.getItem('rname')) {
+    userName.value = localStorage.getItem('rname');
+    userPassword.value = localStorage.getItem('rpassword');
+
+    remember.checked = true;
+}
+
+remember.addEventListener('change' , function(){
+    if (this.checked) {
+        localStorage.setItem ('rname' , userName.value);
+        console.log(userPassword.value);
+        localStorage.setItem('rpassword' , userPassword.value);
+        console.log(localStorage.getItem('rpassword'));
+    } else {
+        localStorage.removeItem('rname');
+        localStorage.removeItem('rpassword');
+    }
+})
 
 
 /*登录跳转*/
@@ -72,14 +94,29 @@ function loginRequest_status(res) {      //登录请求结果处理
     
     if (res.data.result == "failed") {      //失败，显示警示框和红色框框
 
-        alert(res.data.result + " : " + res.data.message);
+        
         if(res.data.message == "该账号不存在" ) {
+
+            alert(res.data.result + " : " + res.data.message);
             userName.style.borderBottom = "1px solid red";
             userName.value = "";
+
         } else if (res.data.message == "密码错误" ) {
 
+            alert(res.data.result + " : " + res.data.message);
             userPassword.style.borderBottom = "1px solid red";
             userPassword.value = "";
+
+        } else if (res.data.message == "此账号已经登录") {
+
+            axios
+            .post("http://47.97.204.234:3000/user/logout", {
+                username: userName.value ,
+                password: userPassword.value
+            })
+            .then(toLogin())
+            .catch(err => console.error(err));
+
         }
 
     } else if (res.data.result == "success") {
@@ -88,8 +125,8 @@ function loginRequest_status(res) {      //登录请求结果处理
         uPWord = userPassword.value;
         userPassword.value = "";
         userName.value = "";
-        
         uID = res.data.userId;
+
         homepageGo();
     }
 
@@ -576,7 +613,7 @@ function article_title(res) {
                                                 <div class="commentator_content">
                                                     <div class="commentator_toptop" index="${bbbb}">
                                                         <p></p>
-                                                        <!--${resp.data.replies[aa].content}-->
+                                                        <div  style="display:none;">${resp.data.replies[aa].content}</div>
                                                     </div>
                             
                                                     <div class="commentator_bottom" index="${aa}">
@@ -612,7 +649,10 @@ function article_title(res) {
                                             
                                             /*干掉攻击*/
                                             var commentator_toptop = document.querySelectorAll('.commentator_toptop');
-                                            commentator_toptop[bbbb].innerText = resp.data.replies[aa].content;
+                                            for (var xxx = 0; xxx < commentator_toptop.length ; xxx++) {
+                                                commentator_toptop[xxx].children[0].innerText = commentator_toptop[xxx].children[1].innerHTML;
+                                            }
+                                            
                                             
 
                                             var toLike_reply = document.querySelectorAll('.toLike_reply');
@@ -1326,9 +1366,13 @@ show_friends.onclick = function () {
         bell_show.style.display = "block";
         information_show.style.display = "none";
         people_show.style.display = "none";
-        /*getfriends();*/
+        getfriends();
+        clearInterval(timer);   //停止慢请求
     } else {
         bell_show.style.display = "none";
+        timer = setInterval(function() {    //继续慢请求
+            getfriends();
+        } ,5000);
     }
 }
 
@@ -1338,9 +1382,14 @@ show_news.onclick = function () {
         information_show.style.display = "block";
         bell_show.style.display = "none";
         people_show.style.display = "none";
-        /*getfriends();*/
+        getfriends();
+        clearInterval(timer);   //停止慢请求
     } else {
         information_show.style.display = "none";
+
+        timer = setInterval(function() {    //继续慢请求
+            getfriends();
+        } ,5000);
     }
 }
 
@@ -1361,13 +1410,15 @@ function getfriends()  {
         friends_list.innerHTML = "";
         for (var i = 0 ; i < res_M.data.friends.length ; i++) {
             friends_list.innerHTML +=`
-            <div class="friends_item" onclick="tochat(
+            <div class="friends_item" 
+                onclick="tochat(
                 '${res_M.data.friends[i].userId}' ,
                 '${res_M.data.friends[i].nickname}' ,
                 '${res_M.data.friends[i].avatar}' ,
                 '${null}' ,
                 '${null}'
-                )">
+                )" 
+                title="${addIntroduction(res_M.data.friends[i].introduction)}">
 
                 <div class="friends_Avatar">
                     <img src="${res_M.data.friends[i].avatar}">
@@ -1395,13 +1446,16 @@ function getfriends()  {
                     if (res_N.data.newMessages[ii].senderId == res_M.data.friends[iii].userId) {
                         console.log(res_N.data.newMessages);
                         news_list.innerHTML += `
-                        <div class="friends_item friends_newsitem" onclick="tochat(
+                        <div class="friends_item friends_newsitem" 
+                            onclick="tochat(
                             '${res_M.data.friends[iii].userId}',
                             '${res_M.data.friends[iii].nickname}',
                             '${res_M.data.friends[iii].avatar}',
                             '${res_N.data.newMessages[ii].content}',
                             '${res_N.data.newMessages[ii].time}'
-                            )" index="${res_M.data.friends[iii].userId}" >
+                            )" 
+                            index="${res_M.data.friends[iii].userId}" 
+                            title="${res_N.data.newMessages[ii].content}">
 
                             <div class="friends_Avatar">
                                 <img src="${res_M.data.friends[iii].avatar}">
@@ -1611,6 +1665,7 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
 
     chat_input_send.onclick = function() {
         var send_text = chat_input.value;
+        
         if(send_text == "") {
             alert('宁没有输入内容');
         } else {
@@ -1650,6 +1705,13 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
             .catch(err => console.error(err));
         }
     }
+
+    document.addEventListener('keyup',function(e) {
+        if (e.keyCode === 13) {
+            chat_input_send.onclick();
+        }
+        
+    } );
 }
 
 
