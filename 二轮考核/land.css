@@ -947,6 +947,11 @@ ul {
     color:#646464;
 }
 
+/*好友亮*/
+.friends_item:hover {
+    background-color: #ebebeb;
+}
+
 /*我的主页导航栏*/
 .people_content {
     display: none;
@@ -1282,6 +1287,7 @@ ul {
     width: 36px;
     text-align: center;
     line-height: 30px;
+    cursor: pointer;
 }
 
 .comment_input_box button {
@@ -2179,11 +2185,13 @@ body {
     display: flex;
     width: 100%;
     margin: 5px 10px;
+    position: relative;
 }
 
 .chat_toolbar .idco {
     font-size: 25px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .chat_input {
@@ -2224,6 +2232,52 @@ body {
     float: right;
     
 }
+
+/*表情*/
+.emoji {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: -110px;
+    left: -50px;
+
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+
+}
+
+.emoji ul {
+    list-style: none;
+    height: 110px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: aliceblue;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.emoji ul li {
+    height: 25px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.emoji ul li:hover {
+    background-color: #ebebeb;
+}
+
+.commentemoji {
+    left:400px;
+    top: -120px;
+}
+
 
 /*定义淡出动画*/
 @keyframes fadein {

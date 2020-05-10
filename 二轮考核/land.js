@@ -157,16 +157,6 @@ goTop.onclick = function () {                                           //当所
         }
     }, 30)
 
-    /*var isTop = true;//先声明
-    //滚动条滚动时触发             
-    window.onscroll = function(){               
-    if(!isTop){
-        clearInterval(goTop.timer);
-    }
-    isTop = false;
-    };
-    isTop = true;//添加在obtn.onclick事件的timer中*/
-
 }
 
 /*判断滚轮事件*/

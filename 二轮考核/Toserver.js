@@ -1,3 +1,21 @@
+/*表情*/
+
+let arrDate = [
+    {title:"哭笑不得", emoji : "😂" },
+    {title:"爱"   , emoji : "😘" },
+    {title:"笑"   , emoji : "😀" },
+    {title:"大笑"  , emoji : "😁" },
+    {title:"开怀大笑", emoji : "🤣" },
+    {title:"假笑"  , emoji : "😃" },
+    {title:"眯眼笑" , emoji : "😄" },
+    {title:"汗笑"  , emoji : "😅" },
+    {title:"电眼笑" , emoji : "😉" },
+    {title:"欣慰笑" , emoji : "😊" },
+    {title:"吐舌头笑", emoji : "😋" },
+    {title:"酷", emoji : "😎" },
+    {title:"色"   , emoji : "😍" },
+    {title:"亲亲"  , emoji : "😗" }
+];
 
 /*-----获取文章-----*/
 
@@ -260,10 +278,30 @@ function article_title(res) {
                             </div>
                     
                             <div class="comment_input">
-                                <div class="comment_input_box">
-                                    <div class="input_box">
+                                <div class="comment_input_box" >
+                                    <div class="input_box" index="${i}">
                                         <textarea placeholder="写下你的评论.."></textarea>
-                                        <span class="idco" style="font-size: 25px;" >&#xe78d</span>
+                                        <span class="idco showEmoji"  index="${i}" style="font-size: 25px;" >&#xe78d</span>
+                                        
+                                        <div class="emoji commentemoji" >
+                                            <ul class="emoji_list">
+                                              <li class="emoji_item" title="哭笑不得">😂</li>
+                                              <li class="emoji_item" title="爱"   >😘</li>
+                                              <li class="emoji_item" title="笑"   >😀</li>
+                                              <li class="emoji_item" title="大笑"  >😁</li>
+                                              <li class="emoji_item" title="开怀大笑">🤣</li>
+                                              <li class="emoji_item" title="假笑"  >😃</li>
+                                              <li class="emoji_item" title="眯眼笑" >😄</li>
+                                              <li class="emoji_item" title="汗笑"  >😅</li>
+                                              <li class="emoji_item" title="电眼笑" >😉</li>
+                                              <li class="emoji_item" title="欣慰笑" >😊</li>
+                                              <li class="emoji_item" title="吐舌头笑">😋</li>
+                                              <li class="emoji_item" title="酷">😎</li>
+                                              <li class="emoji_item" title="色"   >😍</li>
+                                              <li class="emoji_item" title="亲亲"  >😗</li>
+                                            </ul>
+                                        </div>
+
                                     </div>
                                     
                                     <button type="button" class="goComment" index="${i}" >发布</button>
@@ -295,9 +333,7 @@ function article_title(res) {
             /*展开全文*/
             readAll[x].onclick = function(){
                 for (var i = 0 ; i < readAll.length; i++){
-                    readAll[i].style.display = 'block';
-                    readAll[i].parentNode.style.height = "85px";
-                    readAll[i].previousElementSibling.innerText = seeContent[i];
+                    retract[i].onclick();
                 }
     
                 var c = this.getAttribute("index");
@@ -480,6 +516,8 @@ function article_title(res) {
                 var id = res.data.articles[c].articleId;
                 var num = res.data.articles[c].commentNum;
 
+
+
                 for (var ii = 0; ii < comment.length; ii++) {   //评论区域关闭且删除
                     comment[ii].style.display = "none" ;
                     comment_content[ii].innerHTML = "";
@@ -564,7 +602,6 @@ function article_title(res) {
                                     <div class="reply_input_box">
                                         <div class="input_replybox" index="${a}" >
                                             <textarea placeholder="回复${response.data.comments[a].nickname}.."></textarea>
-                                            <span class="idco" style="font-size: 25px;" >&#xe78d</span>
                                         </div>
                                 
                                         <button type="button" class="reply replyTwo" index="${a}" >回复</button>
@@ -970,8 +1007,6 @@ function article_title(res) {
                                 /*回复框框*/
                                 reply_Comment[xx].onclick = function(){
 
-                                    console.log('123');
-
                                     for (var iii = 0; iii < reply_Comment.length; iii++) {   //评论区域关闭且删除
                                         reply_input[iii].style.display = "none" ;
                                         reply_Comment_Close[iii].style.display = "none";
@@ -1019,12 +1054,15 @@ function article_title(res) {
 
     
                             }
+
                             
                         }
                     })
                     .catch(err => console.error(err));
                 }
-            
+
+
+
             }
 
             /*收起评论*/
@@ -1045,6 +1083,30 @@ function article_title(res) {
                 var text = this.previousElementSibling.children[0].value;
                 this.previousElementSibling.children[0].value = "";
                 /*console.log(text);*/
+
+
+                /*检测表情*/
+                var reg1 = /\[[\u4e00-\u9fa5]+\]/g;     //检测符号[]
+                var reg2 = /\[[\u4e00-\u9fa5]+\]/;
+
+                var input_content = text.match(reg1);
+                var txt = text;
+
+                if(input_content && input_content.length){
+                    for(var i = 0 ; i < input_content.length ; i++){
+                        for(var j = 0 ; j < arrDate.length ; j ++){
+
+                            if( input_content[i] === '[' + arrDate[j].title + ']'){
+                                txt = txt.replace ( reg2, arrDate[j].emoji );
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                text = txt;        //添加表情
+
+                showEmoji[c].nextElementSibling.style.display = "none";
                 
                 if (text == "") {
                     alert('宁没有输入内容');
@@ -1066,6 +1128,39 @@ function article_title(res) {
 
                 
             }
+
+            //表情
+            var showEmoji = document.querySelectorAll('.showEmoji');
+            var emoji_list = document.querySelectorAll('.emoji_list');
+
+            showEmoji[x].onclick = function () {
+                var c = this.getAttribute("index");
+                
+                if (showEmoji[c].nextElementSibling.style.display == "none") {
+                
+                    showEmoji[c].nextElementSibling.style.display = "block";
+                
+                } else {
+                
+                    showEmoji[c].nextElementSibling.style.display = "none";
+                }
+
+
+                for ( var e = 0 ; e < emoji_list[c].children.length ; e++ ) {
+                    emoji_list[c].children[e].onclick = function() {
+                        
+
+                        var textV = showEmoji[c].previousElementSibling.value;
+                        var addtitle = this.getAttribute("title");
+                    
+                        showEmoji[c].previousElementSibling.value =  textV + '[' + addtitle + ']';
+                    }
+
+                }
+                
+            }
+
+            
         }
 
 
@@ -1665,7 +1760,30 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
 
     chat_input_send.onclick = function() {
         var send_text = chat_input.value;
+
+        /*检测表情*/
+        var reg1 = /\[[\u4e00-\u9fa5]+\]/g;     //检测符号[]
+        var reg2 = /\[[\u4e00-\u9fa5]+\]/;
         
+        var input_content = send_text.match(reg1);
+        var txt = send_text;
+
+        if(input_content && input_content.length){
+            for(var i = 0 ; i < input_content.length ; i++){
+                for(var j = 0 ; j < arrDate.length ; j ++){
+
+                    if( input_content[i] === '[' + arrDate[j].title + ']'){
+                        txt = txt.replace ( reg2, arrDate[j].emoji );
+                        break;
+                    }
+                }
+            }
+        }
+
+        send_text = txt;        //添加表情
+
+        chat_toolbar.children[1].style.display = "none";
+
         if(send_text == "") {
             alert('宁没有输入内容');
         } else {
@@ -1705,7 +1823,30 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {
             .catch(err => console.error(err));
         }
     }
+    
+    /*表情*/
+    var chat_toolbar =  document.querySelector(".chat_toolbar");
 
+    chat_toolbar.children[0].onclick = function() {
+        chat_toolbar.children[1].style.display = "block";
+    }
+  
+    document.querySelector('.chat_content').addEventListener('click',function(){
+        chat_toolbar.children[1].style.display = "none";
+    });
+  
+    var emoji_item = document.querySelectorAll('.emoji_item');
+  
+    for ( var i = 0 ; i < emoji_item.length ; i++ ) {
+          emoji_item[i].onclick = function() {
+          var textV = chat_input.value;
+          var addtitle = this.getAttribute("title");
+  
+          chat_input.value =  textV + '[' + addtitle + ']';
+        }
+    }
+
+    /*enter键*/
     document.addEventListener('keyup',function(e) {
         if (e.keyCode === 13) {
             chat_input_send.onclick();
@@ -1721,21 +1862,3 @@ function timeFormat_conversion (t) {
     return t1;
 }
 
-/*关闭页面退出*/
-/*window.onunload = function() { 
-    /*var xhr = new XMLHttpRequest();       
-    $.ajax({
-        type:'post',
-        url:'http://47.97.204.234:3000/user/logout',
-        data:{username: uName ,
-            password: uPWord} 
-    })
-    
-    /*xhr.open("POST", "http://47.97.204.234:3000/user/logout", false); // 使用POST方法    
-    xhr.send({username: uName ,
-        password: uPWord}); // 发送同步请求
-
-    setTimeout(function(){},5000);
-      
-};
-*/
