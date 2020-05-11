@@ -1,33 +1,40 @@
+/*静态页面的一些功能转换*/
+
+/*简便代码*/
+var query = document.querySelector.bind(document);
+var queryAll = document.querySelectorAll.bind(document);
+var fromId = document.getElementById.bind(document);
 
 //免密码登录和密码登录和二维码切换  因为获取类元素的时候总是会报错，就麻烦了点
-var right = document.getElementById("right");
-var left = document.getElementById("left");
-var rightOpen = document.getElementById("rightOpen");
-var leftOpen = document.getElementById("leftOpen");
+var right = fromId("right");    //密码登录按钮
+var left = fromId("left");      //免密码登录按钮
 
-var right_Open = document.getElementById("right_Open");
-var left_Open = document.getElementById("left_Open");
+var rightOpen = fromId("rightOpen");        //左右所打开的东西
+var leftOpen = fromId("leftOpen");
+var right_Open = fromId("right_Open");
+var left_Open = fromId("left_Open");
 
-var qrode = document.getElementById("qrode");
-var qrodeOpen = document.getElementById("qrodeOpen");
-var qrodeImg = document.getElementById("qrodeImg");
+var qrode = fromId("qrode");        //二维码
+var qrodeOpen = fromId("qrodeOpen");
+var qrodeImg = fromId("qrodeImg");
 
-right.onclick = function () {
+right.onclick = function () {       //密码登录框框
     right_Open.style.display = "block";
     left_Open.style.display = "none";
     rightOpen.style.display = "block";
     leftOpen.style.display = "none";
 }
 
-left.onclick = function () {
+left.onclick = function () {        //免密码登录框框
     right_Open.style.display = "none";
     left_Open.style.display = "block";
     rightOpen.style.display = "none";
     leftOpen.style.display = "block";
 }
 
-qrode.onclick = function () {
+qrode.onclick = function () {      //二维码登录
     if (qrodeOpen.style.display == "none") {
+
         right_Open.style.display = "none";
         left_Open.style.display = "none";
         rightOpen.style.display = "none";
@@ -36,7 +43,9 @@ qrode.onclick = function () {
         left.style.display = "none";
         qrodeOpen.style.display = "block";
         qrodeImg.src = 'land/back.png';
+
     } else {
+
         right_Open.style.display = "block";
         left_Open.style.display = "none";
         rightOpen.style.display = "block";
@@ -45,15 +54,12 @@ qrode.onclick = function () {
         left.style.display = "inline-block";
         qrodeOpen.style.display = "none";
         qrodeImg.src = 'land/download.png';
+
     }
-    
 }
 
-
-
 /*背景随时间变化而变化*/
-var land = document.querySelector(".land");
-/*var homepage = document.querySelector(".homepage");*/
+var land = query(".land");
 var date = new Date();
 var hour = date.getHours();
 
@@ -78,74 +84,65 @@ if (hour >= 19 && hour < 24){
     console.log("打打打打代码");
 }
 
-
-
 /*返回滑动条数值*/
 function scroll() {
     return {
         "top": document.documentElement.scrollTop + document.body.scrollTop,        //返回滑动条高度
         "left": document.documentElement.scrollLeft + document.body.scrollLeft,      //返回滑动条左侧距离
-        "right": document.documentElement.scrollright + document.body.scrollright
+        "right": document.documentElement.scrollright + document.body.scrollright   //返回右侧距离
     }
 }
 
-
 /*顶部导航条左右移动*/
-var header_roll = document.getElementById("header_roll");
-
+var header_roll = fromId("header_roll");
 
 //回到顶部
-var goTop = document.getElementById("goTop");
+var goTop = fromId("goTop");
 
 /*侧边条条框在一定程度下浮动*/
-var tofixedone = document.getElementById("tofixedone");
-var tofixedtwo = document.getElementById("tofixedtwo");
+var tofixedone = fromId("tofixedone");
+var tofixedtwo = fromId("tofixedtwo");
 
 window.onscroll = function () {
-    if (scroll().top > 200) {
+    if (scroll().top > 200) {       //导航栏的交换
         goTop.style.display = "block" ;
-        header_roll.style.animationName = "topup";
-        disappear();
+        header_roll.style.animationName = "topup";      //设置动画
+        disappear();        //令框框消失
     } else {
         goTop.style.display = "none" ;
         header_roll.style.animationName = "topdown";
     }
 
-    if (scroll().top > 500) {
+    if (scroll().top > 500) {       //主页内容，右侧导航栏的浮动
+
         tofixedone.style.position = "fixed";
         tofixedtwo.style.position = "fixed";
         tofixedone.style.top = "60px";
         tofixedtwo.style.top = "360px";
-
         tofixedone.style.width = "290px";
 
      } else {
-         tofixedtwo.style.position = "static";
-         tofixedone.style.position = "static";
-         tofixedone.style.width = "100%";
+        tofixedtwo.style.position = "static";
+        tofixedone.style.position = "static";
+        tofixedone.style.width = "100%";
      }
 
-     if (scroll().left > 95) {
+     if (scroll().left > 95) {      //导航栏随着左侧距离而移动
         header_roll.style.left = -scroll().left +"px" ;
-
     } else {
         header_roll.style.left = "0px"
-
     }
 
-    if (scroll().left > 90) {
-        /*console.log(scroll().left);*/
+    if (scroll().left > 90) {       //主页内容，右侧导航栏解决浮动时覆盖内容问题
         tofixedone.style.right ="-133px" ;
         tofixedtwo.style.display = "none";
     } else {
         tofixedtwo.style.display = "block";
         tofixedone.style.right = "" ;
-
     }
 }
 
-goTop.onclick = function () {                                           //当所设置gotop元素被点击时，触发函数
-    
+goTop.onclick = function () {           //返回顶部                                  //当所设置gotop元素被点击时，触发函数
     
     clearInterval(goTop.timer);                                         //停止计时器循环
     goTop.timer = setInterval(function () {                             //设置定时器循环期间的操作（每0.03秒来一次）
@@ -159,45 +156,34 @@ goTop.onclick = function () {                                           //当所
 
 }
 
-/*判断滚轮事件*/
+/*判断滚轮事件---------滚动滑轮就取消返回顶部*/
 var scrollFunc = function (e) {  
 
     e = e || window.event;  
 
     if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件               
-
+        
         if (e.wheelDelta > 0) { //当滑轮向上滚动时  
-
            clearInterval(goTop.timer); 
-
         }  
-
         if (e.wheelDelta < 0) { //当滑轮向下滚动时  
-
-
              clearInterval(goTop.timer); 
-
         }  
 
     } else if (e.detail) {  //Firefox滑轮事件  
 
         if (e.detail> 0) { //当滑轮向下滚动时  
-
            clearInterval(goTop.timer); 
-
         }  
 
         if (e.detail< 0) { //当滑轮向上滚动时  
-
             clearInterval(goTop.timer);   
-
         }  
 
     }  
-
 } 
 
-/*IE、Opera注册事件*/
+/*IE、Opera注册事件-------解决兼容性*/
 if(document.attachEvent){
     document.attachEvent('onmousewheel',scrollFunc);
 }
@@ -207,3 +193,4 @@ if (document.addEventListener) {//firefox
 }  
 //Safari与Chrome属于同一类型
 window.onmousewheel = document.onmousewheel = scrollFunc; 
+

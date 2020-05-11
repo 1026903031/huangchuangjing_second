@@ -1,0 +1,281 @@
+/*----------------聊天框-----------------*/
+.chat_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.chat_background {
+    width: 100vw;
+    height: 100vw;
+    background-color: rgba(58,67,71,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.chat {
+    min-height: 600px;
+    min-width: 710px;
+    background-color: #fff;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    box-shadow: 10px rgba(26, 26, 26);
+    border-radius: 10px;
+}
+
+/*头部*/
+.chat header {
+    width: 100%;
+    margin: 0 14px;
+    padding-bottom: 9px;
+    padding: 15px 0;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    border-bottom:1px solid #ebebeb;
+    border-top-left-radius: 10px ;
+    border-top-right-radius: 10px ;
+}
+
+.chat .chat_name {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 700;
+}
+
+/*内容*/
+.chat_content {
+    background-color: rgb(246,246,246);
+    width: 100%;
+    height: 362px;
+    overflow: auto;
+    border-bottom:1px solid #ebebeb;
+}
+
+.chat_item {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat_item_time {
+    font-size: 14px;
+    color: #8590a6;
+}
+
+.chat_item_box {
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.chat_Avatar {
+    height: 40px;
+    width: 40px;
+    border: 4px solid #999;
+    border-radius: 10px;
+}
+
+.chat_Avatar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+}
+
+.char_item_contentbox {
+    position: relative;
+    height: auto;
+    max-width: 388px;
+    margin: 0 15px ;
+    margin-top: -5px;
+    padding: 20px;
+    background-color: #ebebeb;
+    border-radius: 15px;
+    float: left;
+}
+
+.chat_item_angle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #ebebeb;
+    top: 20px;
+    left: -20px;
+}
+
+/*使用者*/
+.chat_userItem {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat_userItem_time {
+    font-size: 14px;
+    color: #8590a6;
+}
+
+.chat_userItem_box {
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.chat_userAvatar {
+    height: 40px;
+    width: 40px;
+    border: 4px solid #999;
+    border-radius: 10px;
+}
+
+.chat_userAvatar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+}
+
+.chat_userItem_contentbox {
+    position: relative;
+    height: auto;
+    max-width: 388px;
+    margin: 0 15px ;
+    margin-top: -5px;
+    padding: 20px;
+    background-color: #ebebeb;
+    border-radius: 15px;
+    float: left;
+}
+
+.chat_userItem_angle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #ebebeb;
+    top: 20px;
+    right: -20px;
+}
+
+/*下方*/
+.chat_inputBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-bottom-left-radius: 10px ;
+    border-bottom-right-radius: 10px ;
+}
+
+.chat_toolbar {
+    display: flex;
+    width: 100%;
+    margin: 5px 10px;
+    position: relative;
+}
+
+.chat_toolbar .idco {
+    font-size: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.chat_input {
+    width: 710px;
+    height: 90px;
+    border: none;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 0 10px;
+    outline: none;
+    outline: 0;
+    overflow:auto;
+    resize:none  /*去右下角*/
+}
+
+.chat_input_floor {
+    width: 100%;
+    position: relative;
+}
+
+.chat_input_floor span {
+    float: right;
+    color: #ebebeb;
+    margin-right: 15px;
+}
+
+.chat_input_floor button {
+    border: none;
+    background-color: #0084ff;
+    color: #fff;
+    height: 30px;
+    width: 70px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 20px;
+    float: right;
+}
+
+/*表情*/
+.emoji {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: -110px;
+    left: -50px;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.emoji ul {
+    list-style: none;
+    height: 110px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: aliceblue;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.emoji ul li {
+    height: 25px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.emoji ul li:hover {
+    background-color: #ebebeb;
+}
+
+.commentemoji {
+    left:400px;
+    top: -120px;
+}

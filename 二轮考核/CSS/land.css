@@ -1,0 +1,576 @@
+@font-face {font-family: "iconfont";
+    src: url('iconfont.eot?t=1588264594198'); /* IE9 */
+    src: url('iconfont.eot?t=1588264594198#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'),
+    url('iconfont.woff?t=1588264594198') format('woff'),
+    url('iconfont.ttf?t=1588264594198') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('iconfont.svg?t=1588264594198#iconfont') format('svg'); /* iOS 4.1- */
+}
+  
+body {
+    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    color: #1a1a1a;
+}
+
+.idco {
+    font-family: "iconfont";
+    font-size: 20px;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    outline: none;
+    outline: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+input {
+    outline: none;
+    outline: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/*--------登录页面--------*/
+.land {
+    /*设置背景图片*/
+    background-image: url(background.png);
+
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(184,229,248);
+    background-size: cover;
+}
+
+/*设置上部分 内容*/
+.land .content {
+    position: relative;
+    height: calc(100% - 80px);      /*设置高度*/
+    min-height: 688px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5px;
+}
+
+/*登录框整个部分*/
+.content_box {
+    display: inline-flex;
+    width: 400px;
+    height: 580px;
+    flex-direction: column;
+}
+
+/*logo部分*/
+.land .logo {
+    margin: 0 auto;
+    width: 128px;
+    height: 81px;
+    margin-bottom: 24px;
+}
+
+.land .logo img {
+    width: 128px;
+    height: 81px;
+}
+
+/*登录框部分*/
+.content .login {
+    width: 400px;
+    height: 500px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+    border-radius: 2px;
+    position: relative;
+}
+
+/*登录框上面*/
+.login_contentOutside {
+    width: 400px;
+    height: 375px;
+}
+
+.login_content {
+    padding: 0 24px 0px;
+    text-align: center;
+}
+
+/*登录上面按钮*/
+.content_top {
+    height: 60px;
+    color: #444;
+    font-size: 16px;
+    line-height: 60px;
+    text-align: left;
+}
+
+.content_top .left {
+    margin-right: 24px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.content_top .left ::after {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: #0084ff;
+}
+
+.content_top .right {
+    margin-right: 24px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.content_top .right ::after {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: #0084ff;
+}
+
+/*右上角二维码*/
+.content_qrodeTab img {
+    height: 52px;
+    width: 52px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.content_qrodeTab .angle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    border:  26px transparent solid;
+    border-bottom-color: #ffffff;
+    border-left-color: #ffffff;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/*输入框框*/
+.content_account,
+.content_password {
+    margin-top: 24px;
+    border-bottom: 1px solid #ebebeb;
+    height: 48px;
+    width: 352px;
+    background-color: white;
+    position: relative;
+}
+
+.content_password {
+    margin-top: 12px;
+}
+
+.login_content input {
+    padding: 0;
+    overflow: hidden;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    background: transparent;
+    border: none;
+    outline:none;
+    outline:0;
+    height: 48px;
+    width: 352px;
+}
+
+.content_password button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.content_password .idco {
+    font-size: 30px;
+}
+
+/*忘记密码那一行*/
+.content_remind {
+    margin-top: 12px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content_remind button {
+    height: auto;
+    border: none;
+    border-radius: 0;
+    line-height: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    color: #8590a6;
+}
+
+.content_remind .phonePass {
+    color: #175199;
+}
+
+.phonePass input {
+    height:auto;
+    width:auto;
+}
+
+/*免密码登录输入框*/
+.signFlow_account,
+.signFlow_password {
+    margin-top: 24px;
+    border-bottom: 1px solid #ebebeb;
+    height: 48px;
+    width: 352px;
+    background-color: white;
+    position: relative;
+}
+
+.signFlow_password {
+    margin-top: 12px;
+}
+
+.login_signFlow input {
+    padding: 0;
+    overflow: hidden;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    background: transparent;
+    border: none;
+    outline:none;
+    outline:0;
+    height: 48px;
+    width: 352px;
+}
+
+.signFlow_password button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: blue;
+    text-align: left;
+}
+
+.country {
+    line-height: 48px;
+    border: none;
+    outline: none;
+    outline: 0;
+    cursor: pointer;
+    color: #999;
+    font-size: 16px;
+}
+
+.country option {
+    text-align: center;
+}
+
+.signFlow_account .division {
+    margin-top: 13px;
+    width: 2px;
+} 
+.signFlow_account {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*接受语音验证码那一行*/
+.signFlow_remind {
+    margin-top: 12px;
+    height: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.signFlow_remind button {
+    height: auto;
+    border: none;
+    border-radius: 0;
+    line-height: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    color: #8590a6;
+}
+
+/*二维码登录*/
+.qrode img {
+    width: 150px;
+    height: 150px;
+}
+
+.qrode_top {
+    margin-bottom: 50px;
+}
+
+.qrode_down {
+    margin-top: 20px;
+    line-height: 25px;
+}
+
+.qrode_down a {
+    color: cornflowerblue;
+}
+
+/*切换隐藏*/
+.leftOpen{
+    display: none ;
+}
+
+.rightOpen{
+    display: block;
+}
+
+#qrodeOpen {
+    display: none;
+}
+
+/*登录按钮*/
+.login_content .goto {
+    width: 100%;
+    margin-top: 30px;
+    height: 36px;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    border: none;  
+    border-radius: 3px;
+    color: #fff;
+    background-color: #0084ff;
+}
+
+/*提示*/
+.content_sign {
+    background-color: white;
+    margin-top: 36px;
+    color: grey;
+    font-size: 13px;
+    text-align: left;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgb(235,235,235);
+}
+
+/*社会账号登录*/
+.login_app {
+    display: flex;
+    color: #8590a6;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 24px;
+    justify-content: space-between;
+}
+
+.appPart {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#green {
+    color: rgb(96,200,77);
+}
+
+#bule {
+    color: rgb(80,200,253);
+}
+
+#red {
+    color: rgb(251,102,34);
+}
+/*内容底部*/
+.login_floor {
+    padding: 0px 24px;
+    color: #0084ff;
+    width: 352px;
+    height: 60px;
+    background-color: #f6f6f6;
+    align-items: center;
+    justify-content: space-between;    
+    display: flex;
+}
+
+.division {
+    width: 1px;
+    background-color: #ebebeb;
+    height: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.login_floor .rightLower .idco {
+    font-size: 25px;
+}
+
+/*底部文字*/
+.floor {
+    font-size: 12px;
+    line-height: 21px;
+    text-align: center;
+    color: #fff;
+    padding-bottom: 10px;
+    text-shadow: 0 1px 2px #999;
+}
+
+/*右下角意见反馈*/
+.feedback {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+}
+
+.feedback .idco {
+    width: 40px;
+    height: 40px;
+    box-shadow:  0 1px 3px rgba(26, 26, 26, 0.1);
+    background: #fff;
+    border-radius: 4px;
+    border: none;
+    font-size: 25px;
+}
+
+.feedback .idco:hover {
+    background-color: #8590a6;
+}
+
+.feedback .pop {
+    display: none;
+    position: fixed;
+    right: 65px;
+    bottom: 17px;
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background-color: rgba(58,67,71,0.5);
+    color: #fff;
+    font-size: 13px;
+    border-radius: 5px;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.feedback .angle {
+    position: fixed;
+    right: 47px;
+    bottom: 22.5px;
+    border:  9px transparent solid;
+    border-left-color: rgba(58,67,71,0.5);
+    width: 0;
+    height: 0;
+}
+
+.feedback_box:hover .poptwo {
+    display: block;
+}
+
+#goTop:hover .popone {
+    display: block;
+}
+
+#goTop {
+    position: fixed;
+    bottom: 60px;
+    right: 12px;
+    display: none;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+#goTop .pop{
+    bottom: 65px;
+}
+
+#goTop .angle{
+    bottom: 70px;
+}
+
+/*定义淡出动画*/
+@keyframes fadein {
+        0%{
+    opacity: 0;     
+    }
+
+       50% {
+    opacity: 0; 
+    }
+        100% {
+    opacity: 1; 
+    }
+}
+
+@-webkit-keyframes fadein {
+        0%{
+    opacity: 0;     
+    }
+
+        50% {
+    opacity: 0; 
+    }
+        100% {
+    opacity: 1; 
+    }
+}
+
+/*导航条上下动画*/
+@keyframes topup {
+    from {
+        top:0px;
+    }
+
+    to {
+        top:-52px;
+    }
+}
+
+@keyframes topdown {
+    from {
+        top:-52px;
+    }
+
+    to {
+        top:0px;
+    }
+}

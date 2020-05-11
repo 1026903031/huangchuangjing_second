@@ -2,8 +2,23 @@
 <html lang="en">
     <head>
       <meta charset="utf-8" />
-      <title> 知乎一下你就知道 </title>
-      <link rel="stylesheet" href="land.css" />
+      <title> 知乎一下 你就知道 </title>
+
+      <!--登录页面-->
+      <link rel="stylesheet" href="CSS/land.css" />
+
+      <!--主页页面-->
+      <link rel="stylesheet" href="CSS/homepage.css" />
+
+      <!--导航条-->
+      <link rel="stylesheet" href="CSS/header.css" />
+
+      <!--个人页面-->
+      <link rel="stylesheet" href="CSS/personal.css" />
+
+      <!--聊天框-->
+      <link rel="stylesheet" href="CSS/chat.css" />
+
     </head>
 
     <body class="bodyyy">
@@ -783,6 +798,7 @@
             </div>
 
         </div>
+
         <!--右下角意见反馈-->
         <div class="feedback">
             <div id="goTop">
@@ -851,10 +867,23 @@
             </div>
         </div>
         
-
     </body>
-    <script src="land.js"></script>
-    <script src="Toserver.js"></script>
+
+    <!--静态页面的一些交互-->
+    <script src="JS/staticState.js"></script>
+
+    <!--登录与退出，以及一些信息-->
+    <script src="JS/loginExit.js"></script>
+
+    <!--文章功能，评论功能，回复功能-->
+    <script src="JS/content.js"></script>
+
+    <!--个人信息的页面和修改-->
+    <script src="JS/personal.js"></script>
+
+    <!--好友功能与聊天-->
+    <script src="JS/friends.js"></script>
+
     <!-- 引入axios cdn -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </html>

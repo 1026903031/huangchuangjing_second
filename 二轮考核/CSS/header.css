@@ -1,0 +1,430 @@
+/*-------------顶上导航条-----------*/
+.header {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    width: 100%;
+    min-width: 1032px;
+    z-index: 100;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(26,26,26,0.1);
+    overflow: hidden;
+    height: 52px;
+    font-size: 15px;
+}
+
+.head {
+    position: relative;
+    width: 1000px;
+    height: 52px;
+    padding: 0 16px;
+    margin: 0 auto;
+}
+
+#header_roll {
+    position: absolute;
+    top: 0px;
+    margin: 0 auto;
+    /*动画（上下）*/
+    animation-duration: 1s; 
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-fill-mode:forwards;
+}
+
+#personal_header_roll {
+    position: absolute;
+    top: 0px;
+    margin: 0 auto;
+}
+
+.head li a:hover {
+    color: rgb(23,81,153);
+}
+
+.head .question:hover,
+.search_box button:hover {
+    background-color: rgb(0,119,230);
+    color: #fff;
+}
+
+/*导航栏1*/
+.header_inner {
+    position: relative;
+    display: flex;
+    width: 1000px;
+    height: 52px;
+    padding: 0 16px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+/*知乎图*/
+.header img {
+    width: 64px;
+    height: 30px;
+}
+
+/*三个按钮*/
+.header ul {
+    list-style-type: none;
+    border-bottom: none;
+    display: flex;
+    margin: 0 23px;
+}
+
+.header ul li {
+    padding: 0 17px;
+    color: rgb(133,144,166);
+    word-break: keep-all;
+    line-height: 52px;
+}
+
+.header_first a{
+    font-weight: 900;
+    color: #1a1a1a;
+}
+
+.header_first div {
+    display: block;
+    position: absolute;
+    left: 105px;
+    bottom: 0;
+    width: 64px;
+    height: 3px;
+    background-color: #0084ff;
+}
+
+.header .search {
+    display: flex;
+    width: 400px;
+    position: relative;
+    overflow: left;
+    height: 34px;
+}
+
+.search_box {
+    border-radius: 3px;
+    border: 1px solid #ebebeb;
+    width: 324px;
+    height: 34px;
+    overflow: hidden;
+}
+
+.search_box label {
+    background-color: #f6f6f6;
+    display: flex;
+}
+
+.search_box input {
+    height: 34px;
+    width: 300px;
+    padding-left: 12px;
+    padding-right: 0;
+    font-size: 14px;
+    border: none;
+    background-color: #f6f6f6;
+}
+
+.question {
+    width: 60px;
+    color: #fff;
+    background-color: #0084ff;
+    padding: 0 14px;
+    margin-left: 16px;
+    border: none;
+    border-radius:3px ;
+    text-align: left;
+    font-size: 15px;
+    word-break: keep-all;
+    height: 34px;
+    line-height: 34px;
+}
+
+.search_box button {
+    background-color: #f6f6f6;
+    height: 34px;
+    border: none;
+    color: #8590a6;
+    text-align: center;
+    font-size: 14px;
+    align-items: center;
+    margin-left: 12px;
+    padding: 0 12px;
+}
+
+/*右边*/
+.hearder_user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 248px;
+    height: 31px;
+}
+
+.hearder_user .bell,
+.hearder_user .information,
+.hearder_user .people {
+    margin-left: 40px;
+    position: relative;
+}
+
+.people_Avatar img {
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    border: 1px solid #646464;
+}
+
+.hearder_user button {
+    border: none;
+    color: #8590a6;
+    background-color: transparent;
+}
+
+.header .idco {
+    font-size: 20px;
+}
+
+.dot {
+    display: none;
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+}
+
+/*我的好友隐藏栏*/
+.tohide {
+    margin-top: 100px;
+    width: 150px;
+    margin-left: 100px;
+}
+
+.user_show .angle {
+    position: absolute;
+    top: -20px;
+    left: 170px;
+    border:  10px transparent solid;
+    border-bottom-color: #fff;
+    width: 0;
+    height: 0;
+}
+
+.user_show {
+    position: fixed;
+    background-color: #fff;
+    border:1px solid #ebebeb;
+    border-radius: 4px;
+    box-shadow: 0 5px 20px rgba(26, 26, 26, 0.1);
+    z-index: 100;
+    width: 360px;
+    margin-top: 16px;
+    margin-left: -170px;
+    height: 440px;
+    display: none;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.user_top {
+    display: flex;
+    border-bottom: 1px solid #ebebeb;
+    align-items: center;
+}
+
+.user_top button {
+    position: relative;
+    flex: 11;
+    height: 48px;
+}
+
+.user_top .idco {
+    font-size: 25px;
+}
+.user_top button:nth-child(3) {
+    color:#0084ff;
+}
+
+.friends_content {
+    height: 350px;
+    width: 360px;
+    display: flex;
+}
+
+.friends_box {
+    width: 360px;
+    color: rgb(133,144,166);
+    text-align: center;  
+    flex-direction: column; 
+    overflow: auto;
+}
+
+.friends_box .idco {
+    width: 150px;
+    height: 120px;
+    font-size: 100px;
+}
+
+.friends_item {
+    width: 330px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.friends_Avatar {
+    height: 50px;
+    width: 50px;
+    border: 4px solid #ebebeb;
+    border-radius: 10px;
+}
+
+.friends_Avatar img {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+}
+
+.friends_news {
+    padding: 5px;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.friends_content span {
+    text-align: left;
+    font-size: 18px;
+    line-height: 25px;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.friends_name {
+    color: #000;
+    font-weight: 900;
+}
+
+.user_footer {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 16px;
+    line-height: 40px;
+    background-color: #fff;
+    border-top: 1px solid #ebebeb;
+    color: #646464;
+}
+
+.user_footer a:hover {
+    color: #175199;
+}
+
+.information .user_top button {
+    font-size: 14px;
+    color:#646464;
+}
+
+/*好友亮*/
+.friends_item:hover {
+    background-color: #ebebeb;
+}
+
+/*我的主页导航栏*/
+.people_content {
+    display: none;
+    margin-top: 16px;
+    position: fixed;
+    background-color: #fff;
+    box-shadow: 0 5px 20px rgba(26, 26, 26, 0.1);
+    z-index: 100;
+    border-radius: 4px;
+    padding: 6px 0;
+    width: 120px;
+    height: 120px;
+    margin-left: -50px;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.people_content a {
+    padding: 0 20px ;
+    width: 100%;
+    text-align: left;
+    line-height: 40px;
+    font-size: 12px;
+    color: #646464;
+
+}
+
+.people_box div:hover {
+    background-color: #ebebeb;
+}
+
+.people_content .angle {
+    position: absolute;
+    top: -20px;
+    left: 50px;
+
+    border:  10px transparent solid;
+    border-bottom-color: #fff;
+    width: 0;
+    height: 0;
+}
+
+/*顶部导航栏2*/
+.header_innershow {
+    position: relative;
+    display: flex;
+    width: 1000px;
+    height: 52px;
+    padding: 0 16px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.innershow_left {
+    display: flex;
+    align-items:center;
+    flex: 11;
+}
+
+.innershow_right {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.header_innershow .search_box,
+.header_innershow .search_box label {
+    width: 216px;
+    height: 34px;
+}
+
+.header_innershow .search_box label input {
+    width: 150px;
+    height: 34px;
+}
+
+.header_innershow .search {
+    width: 310px;
+}
+
+.hearder_user button:hover{
+    color: rgb(118,131,155);
+}
