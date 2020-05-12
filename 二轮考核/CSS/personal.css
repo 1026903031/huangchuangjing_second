@@ -25,16 +25,49 @@ body {
 .personal_backgroundImg {
     position: relative;
     height: 240px;
-    overflow: hidden;
+    overflow: auto;
     background-color: #f6f6f6;
     border-top-right-radius: 2px;
     border-top-left-radius: 2px;
+
+    background-image: url(logo.png) ;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
 }
 
-.personal_backgroundImg img {
+.personal_backgroundImg::-webkit-scrollbar {
+    display:none
+}
+
+.personal_backgroundImg .personal_backgroundImgone {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.personal_backgroundImgtwo {
+    width: 1000px;
+    height: 1000px;
+    display: none;
+    /*CSS3淡入淡出动画*/
+    animation-name: fadein; 
+    animation-duration: 0.4s; 
+    animation-iteration-count: 1; 
+    animation-delay: 0s;
+}
+
+.personal_backgroundImg:hover .personal_backgroundImgtwo{
+    display: block;
+}
+
+.personal_backgroundImg:hover .personal_backgroundImgone{
+    display: none;
 }
 
 /*个人资料*/
@@ -162,7 +195,7 @@ body {
 
 /*主要内容*/
 .primary_Coverage {
-    padding-bottom: 100px;
+    padding-bottom: 70px;
     margin-top: 10px;
 }
 
@@ -193,6 +226,7 @@ body {
     background-color: transparent;
     color: #0084ff;
     font-size: 16px;
+    display: none;
 }
 
 .personal_nameModify .idco {
@@ -205,6 +239,14 @@ body {
 
 .personal_avatarTip_button .idco {
     font-size: 50px;
+}
+
+.field_content:hover .input_content {
+    display: inline-block;
+}
+
+.personal_nameModify .input_content {
+    display: block;
 }
 
 /*按钮组*/

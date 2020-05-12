@@ -54,12 +54,12 @@ show_news.onclick = function () {
 
 /*获取好友信息*/
 function friend_Message() {
-    return axios.get("http://47.97.204.234:3000/user/friendList?userId=" + uID);
+    return axios.get( UILbase + "/user/friendList?userId=" + uID);
 }
   
 /*获取好友信息*/
 function friend_News() {
-    return axios.get("http://47.97.204.234:3000/chat/getMessage?userId=" + uID);
+    return axios.get( UILbase + "/chat/getMessage?userId=" + uID);
 }
 
 /*请求获取好友信息*/
@@ -283,7 +283,7 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {      
     hight_timer = setInterval(function getFriendsMessage() {
 
         axios
-        .get("http://47.97.204.234:3000/chat/getMessage?userId=" + uID, {
+        .get( UILbase + "/chat/getMessage?userId=" + uID, {
         })
         .then( function(resp_FM) {
             if (resp_FM.data.message == "获取成功") {
@@ -363,7 +363,7 @@ function tochat(friendsId,friendsName,friendAvatar,friends_content,time) {      
         } else {
 
             axios       //发出信息请求
-            .post("http://47.97.204.234:3000/chat/sendMessage", {
+            .post( UILbase + "/chat/sendMessage", {
                 userId: uID,
                 friendId: friendsId,
                 content: send_text

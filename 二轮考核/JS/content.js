@@ -1,12 +1,42 @@
 /*--------------文章功能，评论功能，回复功能---------------*/
 
 var seeContent = new Array();   //以存储文本
+var stopnum = 10;
+var tostop = true;
+
+/*-----获取文章-----*/
+function getArticle() {     //成功后转 article_title(res) 函数，以显示文章，评论等功能
+    
+    if ( toGetstop > 0 && tostop) {     //条件成立多申请几篇文章
+        stopnum = 10 + toGetstop;
+    }
+
+    axios       //获取文章
+    .get(UILbase + "/article/getArticles?userId=" + uID + "&start=0&stop=" + stopnum)
+    .then(res => article_title(res))
+    .catch(function(err) {
+        tostop = false;     //判断
+        stopnum--;
+        query('.notcontent').children[0].style.display = 'block';       //修改样式
+        query('.notcontent').children[1].style.display = 'none';
+    });
+
+    axios       //检查登录状态，以获取个人信息
+    .get(UILbase + "/user/getInfo?userId=" + uID )
+    .then(function(res) {
+        uNickname = res.data.info.nickname;
+        uAvatar = res.data.info.avatar;
+        query('.people_Avatar').innerHTML = `<img src="${uAvatar}" ></img>`;
+    })
+    .catch(err => console.error(err) );
+
+}
 
 /*获取文章等等*/
 function article_title(res) {
 
     query('.primaryCoverage').innerHTML = "";       //清空内容
-
+    
     for (i in res.data.articles ) {     //遍历
 
         seeContent[i] = res.data.articles[i].content;       //储存文章内容
@@ -197,7 +227,7 @@ function article_title(res) {
                 if ( res.data.articles[c].liked == true) {      //取消点赞
 
                     axios       //发出取消点赞按钮
-                    .post("http://47.97.204.234:3000/article/likeArticle", {
+                    .post( UILbase + "/article/likeArticle", {
                         userId: uID,
                         articleId: articlesid,
                         like: false 
@@ -215,7 +245,7 @@ function article_title(res) {
                 } else if ( res.data.articles[c].liked == false) {      //点赞
 
                     axios
-                    .post("http://47.97.204.234:3000/article/likeArticle", {
+                    .post( UILbase + "/article/likeArticle", {
                         userId: uID,
                         articleId: articlesid,
                         like: true 
@@ -233,7 +263,7 @@ function article_title(res) {
                     if ( res.data.articles[c].disliked == true) {       //取消点踩
 
                         axios
-                        .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                        .post( UILbase + "/article/dislikeArticle", {
                             userId: uID,
                             articleId: articlesid,
                             dislike: false 
@@ -263,7 +293,7 @@ function article_title(res) {
                 if ( res.data.articles[c].disliked == true) {       //取消点踩
 
                     axios
-                    .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                    .post( UILbase + "/article/dislikeArticle", {
                         userId: uID,
                         articleId: articlesid,
                         dislike: false 
@@ -280,7 +310,7 @@ function article_title(res) {
                 } else if ( res.data.articles[c].disliked == false) {       //点踩
 
                     axios
-                    .post("http://47.97.204.234:3000/article/dislikeArticle", {
+                    .post( UILbase + "/article/dislikeArticle", {
                         userId: uID,
                         articleId: articlesid,
                         dislike: true 
@@ -297,7 +327,7 @@ function article_title(res) {
                     if ( res.data.articles[c].liked == true) {      //如果点赞则取消
 
                         axios
-                        .post("http://47.97.204.234:3000/article/likeArticle", {
+                        .post( UILbase + "/article/likeArticle", {
                             userId: uID,
                             articleId: articlesid,
                             like: false 
@@ -347,7 +377,7 @@ function article_title(res) {
                 } else {        //发出请求
                     
                     axios
-                    .get("http://47.97.204.234:3000/article/getComments?userId="+ uID +"&articleId="+ id )
+                    .get( UILbase + "/article/getComments?userId="+ uID +"&articleId="+ id )
                     .then(function (response) {
 
                         for(var a = 0; a < response.data.comments.length ; a++) {       //添加评论内容
@@ -431,7 +461,7 @@ function article_title(res) {
                                 if(replied == true){        //有回复则添加回复
 
                                     axios
-                                    .get("http://47.97.204.234:3000/article/getReplies?userId=" + uID + "&commentId=" + response.data.comments[a].commentId )
+                                    .get( UILbase + "/article/getReplies?userId=" + uID + "&commentId=" + response.data.comments[a].commentId )
                                     .then(function (resp) {
 
                                         for (var aa = 0 ; aa < resp.data.replies.length ; aa++){        //添加评论内容
@@ -557,7 +587,7 @@ function article_title(res) {
                                                     alert('宁没有输入内容');
                                                 } else {
                                                     axios
-                                                    .post("http://47.97.204.234:3000/article/reply",{
+                                                    .post( UILbase + "/article/reply",{
                                                         userId: uID ,
 	                                                    commentId: response.data.comments[cc].commentId,
 	                                                    content: texts
@@ -583,7 +613,7 @@ function article_title(res) {
                                                     if ( this.style.color == "rgb(0, 132, 255)" ) {     //通过颜色判断是否点赞、点踩
 
                                                         axios
-                                                        .post("http://47.97.204.234:3000/article/likeReply", {
+                                                        .post( UILbase + "/article/likeReply", {
                                                             userId: uID,
                                                             replyId: cc,
                                                             like: false 
@@ -596,7 +626,7 @@ function article_title(res) {
                                                     } else {
 
                                                         axios
-                                                        .post("http://47.97.204.234:3000/article/likeReply", {
+                                                        .post( UILbase + "/article/likeReply", {
                                                             userId: uID,
                                                             replyId: cc,
                                                             like: true 
@@ -618,7 +648,7 @@ function article_title(res) {
                                                     if ( this.style.color == "rgb(0, 132, 255)" ) {     //通过颜色判断是否点赞、点踩
 
                                                         axios
-                                                        .post("http://47.97.204.234:3000/article/dislikeReply", {
+                                                        .post( UILbase + "/article/dislikeReply", {
                                                             userId: uID,
                                                             replyId: cc,
                                                             dislike: false 
@@ -631,7 +661,7 @@ function article_title(res) {
                                                     } else {
 
                                                         axios
-                                                        .post("http://47.97.204.234:3000/article/dislikeReply", {
+                                                        .post( UILbase + "/article/dislikeReply", {
                                                             userId: uID,
                                                             replyId: cc,
                                                             dislike: true 
@@ -650,7 +680,7 @@ function article_title(res) {
                                                     var cc = this.getAttribute('index');
 
                                                     axios
-                                                    .delete("http://47.97.204.234:3000/article/deleteReply" , {
+                                                    .delete( UILbase + "/article/deleteReply" , {
                                                         data:{
                                                             userId: uID,
                                                             replyId: cc
@@ -715,7 +745,7 @@ function article_title(res) {
                                     if ( response.data.comments[cc].liked == true) {        //取消点赞
 
                                         axios
-                                        .post("http://47.97.204.234:3000/article/likeComment", {
+                                        .post( UILbase + "/article/likeComment", {
                                             userId: uID,
                                             commentId: response.data.comments[cc].commentId,
                                             like: false 
@@ -728,7 +758,7 @@ function article_title(res) {
                                     } else if ( response.data.comments[cc].liked == false ) {       //点赞
 
                                         axios
-                                        .post("http://47.97.204.234:3000/article/likeComment", {
+                                        .post( UILbase + "/article/likeComment", {
                                             userId: uID,
                                             commentId: response.data.comments[cc].commentId,
                                             like: true 
@@ -750,7 +780,7 @@ function article_title(res) {
                                     if ( response.data.comments[cc].disliked == true) {     //取消点踩
 
                                         axios
-                                        .post("http://47.97.204.234:3000/article/dislikeComment", {
+                                        .post( UILbase + "/article/dislikeComment", {
                                             userId: uID,
                                             commentId: response.data.comments[cc].commentId,
                                             dislike: false 
@@ -763,7 +793,7 @@ function article_title(res) {
                                     } else if ( response.data.comments[cc].disliked == false ) {        //点踩
 
                                         axios
-                                        .post("http://47.97.204.234:3000/article/dislikeComment", {
+                                        .post( UILbase + "/article/dislikeComment", {
                                             userId: uID,
                                             commentId: response.data.comments[cc].commentId,
                                             dislike: true 
@@ -783,7 +813,7 @@ function article_title(res) {
                                     var cc = this.getAttribute("index");
 
                                     axios
-                                    .delete("http://47.97.204.234:3000/article/deleteComment", {
+                                    .delete( UILbase + "/article/deleteComment", {
                                         data:{
                                             userId: uID ,
                                             commentId: response.data.comments[cc].commentId
@@ -834,7 +864,7 @@ function article_title(res) {
                                     } else {
 
                                         axios
-                                        .post("http://47.97.204.234:3000/article/reply",{
+                                        .post( UILbase + "/article/reply",{
                                             userId: uID ,
 	                                        commentId: response.data.comments[cc].commentId,
 	                                        content: input_replybox[cc].children[0].value
@@ -906,7 +936,7 @@ function article_title(res) {
                 } else {
 
                     axios
-                    .post("http://47.97.204.234:3000/article/comment", {
+                    .post( UILbase + "/article/comment", {
                         userId: uID,
                         articleId: res.data.articles[c].articleId ,
                         content: text

@@ -21,10 +21,24 @@ function toPersonalHomepage() {
 
 }
 
+/*设置头像滚动*/
+var personal_backgroundImgtwo = query('.personal_backgroundImgtwo')
+
+personal_backgroundImgtwo.onmouseover = function (){
+
+    timess = setInterval(function() {        //疯狂判断
+        if (personal_backgroundImgtwo.parentNode.scrollTop != 500) {
+            personal_backgroundImgtwo.parentNode.scrollTop = 500;
+            clearInterval(timess);
+        }
+    } ,100);
+
+}
+
 /*获取个人信息*/
 function getInfo() {
     axios
-    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID )
+    .get(UILbase + "/user/getInfo?userId=" + uID )
     .then(res => addPersonal(res))
     .catch(err => console.error(err));
 }
@@ -54,6 +68,7 @@ function addPersonal(res) {
     query('.people_Avatar').innerHTML = `<img src="${uAvatar}" ></img>`;        //显示头像
     query('.userAvatarImg').src = uAvatar;          //获取头像地址
     query('.userNameTitle').innerText = uNickname;      //显示名字
+    personal_backgroundImgtwo.src = uAvatar;          //设置背景为头像
 
     var field_text = queryAll('.field_text');       //各各信息
 
@@ -74,7 +89,7 @@ function addPersonal(res) {
             alert('宁没有输入内容');
         } else {
             axios       //发出修改请求
-            .post("http://47.97.204.234:3000/user/alterInfo",{
+            .post(UILbase + "/user/alterInfo",{
                 userId : uID,
                 direction : 0 ,
                 content : textname
@@ -104,7 +119,7 @@ function addPersonal(res) {
             alert('宁没有选择内容');
         } else {
             axios       //发出修改性别信息的请求
-            .post("http://47.97.204.234:3000/user/alterInfo",{
+            .post(UILbase + "/user/alterInfo",{
                 userId : uID,
                 direction : 1 ,
                 content : textgender
@@ -113,7 +128,6 @@ function addPersonal(res) {
                 alert(resp.data.result + resp.data.message);
                 toPersonalHomepage();    //重新进入个人页面
                 group_two[1].onclick();     //隐藏当时的选项
-
             })
             .catch(err => console.error(err));
         }
@@ -128,7 +142,7 @@ function addPersonal(res) {
             alert('宁没有输入内容');
         } else {
             axios       //发出修改一句话信息的请求
-            .post("http://47.97.204.234:3000/user/alterInfo",{
+            .post(UILbase + "/user/alterInfo",{
                 userId : uID,
                 direction : 2 ,
                 content : textIntroduction
@@ -153,7 +167,7 @@ function addPersonal(res) {
             alert('宁没有选择内容');
         } else {
             axios       //发出修改职业信息的请求
-            .post("http://47.97.204.234:3000/user/alterInfo",{
+            .post(UILbase + "/user/alterInfo",{
                 userId : uID,
                 direction : 3 ,
                 content : textindustry
@@ -178,7 +192,7 @@ function addPersonal(res) {
             alert('宁没有输入内容');
         } else {
             axios       //发出修改个人简介请求
-            .post("http://47.97.204.234:3000/user/alterInfo",{
+            .post(UILbase + "/user/alterInfo",{
                 userId : uID,
                 direction : 4 ,
                 content : textIntroduction

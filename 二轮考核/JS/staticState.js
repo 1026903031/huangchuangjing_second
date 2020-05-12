@@ -102,8 +102,10 @@ var goTop = fromId("goTop");
 /*侧边条条框在一定程度下浮动*/
 var tofixedone = fromId("tofixedone");
 var tofixedtwo = fromId("tofixedtwo");
+var toGetstop = 0;
 
 window.onscroll = function () {
+
     if (scroll().top > 200) {       //导航栏的交换
         goTop.style.display = "block" ;
         header_roll.style.animationName = "topup";      //设置动画
@@ -140,6 +142,25 @@ window.onscroll = function () {
         tofixedtwo.style.display = "block";
         tofixedone.style.right = "" ;
     }
+
+    if(scroll().top == query('body').scrollHeight) {
+        console.log(0);
+    }
+
+    //变量scrollTop是滚动条滚动时，距离顶部的距离
+    var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+    //变量windowHeight是可视区的高度
+    var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    //变量scrollHeight是滚动条的总高度
+    var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+    //滚动条到底部的条件
+    if(scrollTop+windowHeight==scrollHeight && homepage.style.display == 'block'){      //让文章页面下滑获取新文章
+        if(tostop == true) {
+            toGetstop++;
+            getArticle();
+        }
+    }   
+
 }
 
 goTop.onclick = function () {           //返回顶部                                  //当所设置gotop元素被点击时，触发函数

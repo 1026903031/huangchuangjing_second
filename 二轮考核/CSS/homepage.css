@@ -622,3 +622,13 @@
 .homepage_main footer a:hover {
     color: rgb(23,81,153);
 }
+
+/*----无文章-----*/
+.notcontent {
+    text-align: center;
+    margin-left: -350px ;
+}
+
+.notcontent h1 {
+    color: #999;
+}

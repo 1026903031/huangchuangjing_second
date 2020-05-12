@@ -69,6 +69,26 @@
     border-bottom:1px solid #ebebeb;
 }
 
+ /*滚动条样式*/        
+.chat_content::-webkit-scrollbar {           
+    width: 4px;                      
+}        
+
+.chat_content::-webkit-scrollbar-thumb {            
+    border-radius: 10px;            
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);            
+    background: rgba(0,0,0,0.2);        
+}        
+    
+.chat_content::-webkit-scrollbar-track {            
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);            
+    border-radius: 0;           
+    background: rgba(0,0,0,0.1);        
+}
+
+/*聊天内容*/
 .chat_item {
     margin: 20px;
     display: flex;

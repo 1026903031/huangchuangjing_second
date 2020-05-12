@@ -28,6 +28,7 @@ var personal_Homepage = query(".personal_Homepage");   //个人主页
 var header  = query(".header");    //导航条
 var remember = query('.remember');      //记住用户名
 var uName , uPWord , uID,uNickname,uAvatar;     //用户数据
+var UILbase = "http://47.97.204.234:3000"       //主地址
 
 /*记住用户名*/
 if(localStorage.getItem('rname')) {
@@ -52,7 +53,7 @@ fromId("goto_homepage").addEventListener("click", toLogin);  //监听  点击后
 function toLogin() {    //登录，向服务器请求
 
     axios
-    .post("http://47.97.204.234:3000/user/login", {
+    .post( UILbase + "/user/login", {
         username: userName.value,   //输入框内容（账号）
         password: userPassword.value    //输入框内容 （密码）
     },{withCredentials:true})
@@ -80,7 +81,7 @@ function loginRequest_status(res) {      //登录请求结果处理
         } else if (res.data.message == "此账号已经登录") {      //若账号已经登录则退出去重新登录，以进入页面
 
             axios
-            .post("http://47.97.204.234:3000/user/logout", {
+            .post(UILbase + "/user/logout", {
                 username: userName.value ,
                 password: userPassword.value
             })
@@ -119,25 +120,6 @@ function homepageGo() {     //转主页
 
 }
 
-/*-----获取文章-----*/
-function getArticle() {     //成功后转 article_title(res) 函数，以显示文章，评论等功能
-
-    axios       //获取文章
-    .get("http://47.97.204.234:3000/article/getArticles?userId=" + uID + "&start=0&stop=18")
-    .then(res => article_title(res))
-    .catch(err => console.error(err));
-
-    axios       //检查登录状态，以获取个人信息
-    .get("http://47.97.204.234:3000/user/getInfo?userId=" + uID )
-    .then(function(res) {
-        uNickname = res.data.info.nickname;
-        uAvatar = res.data.info.avatar;
-        query('.people_Avatar').innerHTML = `<img src="${uAvatar}" ></img>`;
-    })
-    .catch(err => console.error(err));
-
-}
-
 /*登录失败后*/
 userName.onclick = function () {    //被点击框框红色消失
     userName.style.borderBottom = "none";
@@ -154,7 +136,7 @@ function toLogout() {    //向服务器请求 退出登录
 
     this.parentNode.parentNode.style.display = "none";
     axios
-    .post("http://47.97.204.234:3000/user/logout", {
+    .post(UILbase + "/user/logout", {
         username: uName ,
         password: uPWord
     })
